@@ -13,6 +13,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatCardModule } from '@angular/material/card';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatListModule } from '@angular/material/list';
+import { MatRadioModule } from '@angular/material/radio';
 
 @NgModule({
   declarations: [
@@ -31,7 +32,8 @@ import { MatListModule } from '@angular/material/list';
     BrowserAnimationsModule,
     MatCardModule,
     MatSidenavModule,
-    MatListModule
+    MatListModule,
+    MatRadioModule
   ],
   providers: [],
   bootstrap: [AppComponent]
