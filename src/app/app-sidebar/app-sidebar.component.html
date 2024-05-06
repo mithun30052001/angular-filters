@@ -1,4 +1,7 @@
 <div class="sidebar">
   <app-menu-list></app-menu-list>
-  <app-below-menu *ngIf="isJobsRoute"></app-below-menu>
+  <ng-template [ngIf]="isJobsRoute">
+    <app-below-menu></app-below-menu>
+  </ng-template>
+
 </div>

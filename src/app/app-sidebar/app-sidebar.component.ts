@@ -12,10 +12,8 @@ export class AppSidebarComponent {
   constructor(private router: Router) {}
 
   ngOnInit() {
-    this.router.events.subscribe((event) => {
-      if (event instanceof NavigationEnd) {
-        this.isJobsRoute = this.router.url === '/jobs';
-      }
+    this.router.events.subscribe(() => {
+        this.isJobsRoute = this.router.url.includes('/jobs');
     });
   }
 }
