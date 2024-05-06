@@ -28,3 +28,12 @@
     </mat-card>
   </ng-template>
 </div>
+
+<div class="footer" *ngIf="filteredJobListings.length > 0">
+  <mat-paginator
+    [length]="filteredJobListings.length"
+    [pageSize]="itemsPerPage"
+    [pageSizeOptions]="pageSizeOptions"
+    (page)="onPageChange($event)">
+  </mat-paginator>
+</div>

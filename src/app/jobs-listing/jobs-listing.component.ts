@@ -1,34 +1,74 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { MatPaginator, PageEvent } from '@angular/material/paginator';
+import { JobsService } from '../services/job.services';
 
 @Component({
   selector: 'app-jobs-listing',
   templateUrl: './jobs-listing.component.html',
   styleUrls: ['./jobs-listing.component.scss']
 })
-export class JobsListingComponent implements OnInit {
+export class JobsListingComponent implements OnInit, AfterViewInit {
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
   jobListings: any[] = [];
   filteredJobListings: any[] = [];
-  
-  constructor(private route: ActivatedRoute) { }
+  pageSizeOptions: number[] = [5, 10, 25, 100];
+  itemsPerPage: number = 5;
+  location: string = '';
+
+  constructor(
+    private route: ActivatedRoute,
+    private router: Router,
+    private jobsService: JobsService
+  ) { }
 
   ngOnInit(): void {
-  
-    this.jobListings = [
-      { title: 'Non Voice - Fresher', location: 'Chennai', details: 'Non Voice Process, Good Typing Skills, Good Written and Spoken English, Logical Reasoning and Analytical Thinking. Any Arts & Science Graduate except Life Science Graduates, Pass out - 2018 to 2022, No Backlogs.', type: 'Full time', experience: 'Fresher', date: '18 Jan 2023' },
-      { title: 'Non Voice - Fresher', location: 'Chennai', details: 'Non Voice Process, Good Typing Skills, Good Written and Spoken English, Logical Reasoning and Analytical Thinking. Any Arts & Science Graduate except Life Science Graduates, Pass out - 2018 to 2022, No Backlogs.', type: 'Full time', experience: 'Fresher', date: '18 Jan 2023' },
-      { title: 'Non Voice - Fresher', location: 'Coimbatore', details: 'Non Voice Process, Good Typing Skills, Good Written and Spoken English, Logical Reasoning and Analytical Thinking. Any Arts & Science Graduate except Life Science Graduates, Pass out - 2018 to 2022, No Backlogs.', type: 'Full time', experience: 'Fresher', date: '18 Jan 2023' },
-      { title: 'Non Voice - Fresher', location: 'Hyderabad', details: 'Non Voice Process, Good Typing Skills, Good Written and Spoken English, Logical Reasoning and Analytical Thinking. Any Arts & Science Graduate except Life Science Graduates, Pass out - 2018 to 2022, No Backlogs.', type: 'Full time', experience: 'Fresher', date: '18 Jan 2023' },
-      { title: 'Non Voice - Fresher', location: 'Lucknow', details: 'Non Voice Process, Good Typing Skills, Good Written and Spoken English, Logical Reasoning and Analytical Thinking. Any Arts & Science Graduate except Life Science Graduates, Pass out - 2018 to 2022, No Backlogs.', type: 'Full time', experience: 'Fresher', date: '18 Jan 2023' }
-    ];
+    this.jobsService.getJobListings().subscribe(jobListings => {
+      this.jobListings = jobListings;
+      this.applyFilter();
+    });
 
     this.route.queryParams.subscribe(params => {
-      if (params['location']) {
-        const targetLocation = params['location'].toLowerCase();
-        this.filteredJobListings = this.jobListings.filter(job => job.location.toLowerCase() === targetLocation);
-      } else {
-        this.filteredJobListings = this.jobListings;
-      }
+      this.location = params['location'] || '';
+      this.itemsPerPage = +params['itemsPerPage'] || 5;
+      this.applyFilter();
     });
+  }
+
+  ngAfterViewInit(): void {
+    this.paginator?.page.subscribe((event: PageEvent) => {
+      this.onPageChange(event);
+    });
+  }
+
+  onPageChange(event: PageEvent) {
+    if (this.paginator) {
+      this.paginator.pageIndex = event.pageIndex;
+      this.paginator.pageSize = event.pageSize;
+      this.itemsPerPage = event.pageSize;
+      this.router.navigate([], {
+        queryParams: {
+          location: this.location,
+          itemsPerPage: this.itemsPerPage
+        }
+      });
+      this.applyFilter();
+    }
+  }
+
+  private applyFilter() {
+    if (this.location) {
+      this.filteredJobListings = this.jobListings.filter(job => job.location.toLowerCase() === this.location.toLowerCase());
+    } else {
+      this.filteredJobListings = this.jobListings;
+    }
+
+    if (this.paginator) {
+      const startIndex = this.paginator.pageIndex * this.itemsPerPage;
+      const endIndex = startIndex + this.itemsPerPage;
+      this.filteredJobListings = this.filteredJobListings.slice(startIndex, endIndex);
+    }else{
+      this.filteredJobListings = this.filteredJobListings.slice(0, this.itemsPerPage);
+    }
   }
 }
