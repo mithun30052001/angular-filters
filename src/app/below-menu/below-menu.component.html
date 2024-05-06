@@ -1,8 +1,19 @@
 <div class="below-menu">
-  <ul>
-    <li><a routerLink="/jobs?location=Chennai">Chennai</a></li>
-    <li><a routerLink="/jobs?location=Coimbatore">Coimbatore</a></li>
-    <li><a routerLink="/jobs?location=Hyderabad">Hyderabad</a></li>
-    <li><a routerLink="/jobs?location=Lucknow">Lucknow</a></li>
-  </ul>
+  <h3 style="text-align: center;">Job Location</h3>
+  <div>
+    <input type="radio" name="location" id="chennai" value="Chennai" (change)="updateLocation($event)"> 
+    <label for="chennai">Chennai</label>
+  </div>
+  <div>
+    <input type="radio" name="location" id="coimbatore" value="Coimbatore" (change)="updateLocation($event)"> 
+    <label for="coimbatore">Coimbatore</label>
+  </div>
+  <div>
+    <input type="radio" name="location" id="hyderabad" value="Hyderabad" (change)="updateLocation($event)"> 
+    <label for="hyderabad">Hyderabad</label>
+  </div>
+  <div>
+    <input type="radio" name="location" id="lucknow" value="Lucknow" (change)="updateLocation($event)"> 
+    <label for="lucknow">Lucknow</label>
+  </div>
 </div>
