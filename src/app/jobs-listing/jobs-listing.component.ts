@@ -15,6 +15,7 @@ export class JobsListingComponent implements OnInit, AfterViewInit {
   pageSizeOptions: number[] = [5, 10, 25, 100];
   itemsPerPage: number = 5;
   location: string = '';
+  searchTerm: string = '';
   timings: string = '';
 
   constructor(
@@ -33,6 +34,7 @@ export class JobsListingComponent implements OnInit, AfterViewInit {
       this.location = params['location'] || '';
       this.timings = params['timings'] || '';
       this.itemsPerPage = +params['itemsPerPage'] || 5;
+      this.searchTerm = params['searchQuery'] || '';
       this.applyFilter();
     });
   }
@@ -48,35 +50,52 @@ export class JobsListingComponent implements OnInit, AfterViewInit {
       this.paginator.pageIndex = event.pageIndex;
       this.paginator.pageSize = event.pageSize;
       this.itemsPerPage = event.pageSize;
-      this.router.navigate([], {
-        queryParams: {
-          location: this.location,
-          timings: this.timings,
-          itemsPerPage: this.itemsPerPage
-        }
-      });
+      this.updateQueryParams();
       this.applyFilter();
     }
   }
 
+  onSearch(searchTerm: string) {
+    this.searchTerm = searchTerm;
+    this.updateQueryParams(); // Update query params on search
+    this.applyFilter();
+  }
+
   private applyFilter() {
-    this.filteredJobListings = [...this.jobListings];
+    let filteredListings = this.jobListings;
+
     if (this.location) {
-      this.filteredJobListings = this.filteredJobListings.filter(job => job.location.toLowerCase() === this.location.toLowerCase());
+      filteredListings = filteredListings.filter(job => job.location.toLowerCase() === this.location.toLowerCase());
     }
-    if (this.timings) {
-      if(this.timings=='Not given'){
-        this.filteredJobListings = this.filteredJobListings.filter(job => job.timePreference?.toLowerCase() == null);
-      }else{
-        this.filteredJobListings = this.filteredJobListings.filter(job => job.timePreference?.toLowerCase() === this.timings.toLowerCase());
-      }
+
+    if (this.searchTerm) {
+      const searchLower = this.searchTerm.toLowerCase();
+      filteredListings = filteredListings.filter(job =>
+        job.title.toLowerCase().includes(searchLower) ||
+        job.details.toLowerCase().includes(searchLower) ||
+        job.location.toLowerCase().includes(searchLower) ||
+        job.type.toLowerCase().includes(searchLower)
+      );
     }
+
     if (this.paginator) {
       const startIndex = this.paginator.pageIndex * this.itemsPerPage;
       const endIndex = startIndex + this.itemsPerPage;
-      this.filteredJobListings = this.filteredJobListings.slice(startIndex, endIndex);
+      this.filteredJobListings = filteredListings.slice(startIndex, endIndex);
     } else {
-      this.filteredJobListings = this.filteredJobListings.slice(0, this.itemsPerPage);
+      this.filteredJobListings = filteredListings.slice(0, this.itemsPerPage);
     }
+  }
+
+  private updateQueryParams() {
+    const queryParams = {
+      location: this.location,
+      itemsPerPage: this.itemsPerPage,
+      searchQuery: this.searchTerm
+    };
+    this.router.navigate([], {
+      queryParams: queryParams,
+      queryParamsHandling: 'merge'
+    });
   }
 }
