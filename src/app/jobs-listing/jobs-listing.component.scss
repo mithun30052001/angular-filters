@@ -1,10 +1,10 @@
 
 .job-listings {
   display: grid;
-  grid-template-columns: repeat(3, 1fr); // 3 columns of equal width
-  grid-gap: 20px; // Spacing between cards
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 20px; 
 }
 
 mat-card {
-  width: 100%; // Make sure each card takes up full width of its grid cell
+  width: 100%;
 }
