@@ -2,7 +2,6 @@ import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { JobsService } from '../services/job.services';
-
 @Component({
   selector: 'app-jobs-listing',
   templateUrl: './jobs-listing.component.html',
@@ -15,87 +14,89 @@ export class JobsListingComponent implements OnInit, AfterViewInit {
   pageSizeOptions: number[] = [5, 10, 25, 100];
   itemsPerPage: number = 5;
   location: string = '';
-  searchTerm: string = '';
   timings: string = '';
-
+  searchTerm: string = '';
   constructor(
     private route: ActivatedRoute,
     private router: Router,
     private jobsService: JobsService
   ) { }
-
   ngOnInit(): void {
     this.jobsService.getJobListings().subscribe(jobListings => {
       this.jobListings = jobListings;
       this.applyFilter();
     });
-
     this.route.queryParams.subscribe(params => {
       this.location = params['location'] || '';
       this.timings = params['timings'] || '';
       this.itemsPerPage = +params['itemsPerPage'] || 5;
-      this.searchTerm = params['searchQuery'] || '';
+      this.searchTerm = params['searchTerm'] || '';
+      this.updateQueryParams();
       this.applyFilter();
     });
   }
-
   ngAfterViewInit(): void {
     this.paginator?.page.subscribe((event: PageEvent) => {
       this.onPageChange(event);
     });
   }
-
   onPageChange(event: PageEvent) {
     if (this.paginator) {
       this.paginator.pageIndex = event.pageIndex;
       this.paginator.pageSize = event.pageSize;
       this.itemsPerPage = event.pageSize;
-      this.updateQueryParams();
+      this.router.navigate([], {
+        queryParams: {
+          location: this.location,
+          timings: this.timings,
+          itemsPerPage: this.itemsPerPage,
+          searchTerm: this.searchTerm
+        }
+      });
       this.applyFilter();
     }
   }
-
   onSearch(searchTerm: string) {
-    this.searchTerm = searchTerm;
-    this.updateQueryParams(); // Update query params on search
+    this.searchTerm = searchTerm.trim().toLowerCase();
+    this.updateQueryParams();
     this.applyFilter();
   }
-
   private applyFilter() {
-    let filteredListings = this.jobListings;
-
+    this.filteredJobListings = [...this.jobListings];
     if (this.location) {
-      filteredListings = filteredListings.filter(job => job.location.toLowerCase() === this.location.toLowerCase());
+      this.filteredJobListings = this.filteredJobListings.filter(job => job.location.toLowerCase() === this.location.toLowerCase());
     }
-
+    if (this.timings) {
+      if(this.timings=='Not given'){
+        this.filteredJobListings = this.filteredJobListings.filter(job => job.timePreference?.toLowerCase() == null);
+      }else{
+        this.filteredJobListings = this.filteredJobListings.filter(job => job.timePreference?.toLowerCase() === this.timings.toLowerCase());
+      }
+    }
     if (this.searchTerm) {
-      const searchLower = this.searchTerm.toLowerCase();
-      filteredListings = filteredListings.filter(job =>
-        job.title.toLowerCase().includes(searchLower) ||
-        job.details.toLowerCase().includes(searchLower) ||
-        job.location.toLowerCase().includes(searchLower) ||
-        job.type.toLowerCase().includes(searchLower)
+      this.filteredJobListings = this.filteredJobListings.filter(job =>
+        job.title.toLowerCase().includes(this.searchTerm) ||
+        job.details.toLowerCase().includes(this.searchTerm) ||
+        job.experience.toLowerCase().includes(this.searchTerm) || job.location.toLowerCase().includes(this.searchTerm)
       );
     }
-
     if (this.paginator) {
       const startIndex = this.paginator.pageIndex * this.itemsPerPage;
       const endIndex = startIndex + this.itemsPerPage;
-      this.filteredJobListings = filteredListings.slice(startIndex, endIndex);
+      this.filteredJobListings = this.filteredJobListings.slice(startIndex, endIndex);
     } else {
-      this.filteredJobListings = filteredListings.slice(0, this.itemsPerPage);
+      this.filteredJobListings = this.filteredJobListings.slice(0, this.itemsPerPage);
     }
   }
-
   private updateQueryParams() {
-    const queryParams = {
-      location: this.location,
-      itemsPerPage: this.itemsPerPage,
-      searchQuery: this.searchTerm
-    };
-    this.router.navigate([], {
-      queryParams: queryParams,
-      queryParamsHandling: 'merge'
-    });
+  const queryParams: any = {
+    location: this.location,
+    timings: this.timings,
+    itemsPerPage: this.itemsPerPage,
+  };
+  if (this.searchTerm) {
+    queryParams.searchTerm = this.searchTerm;
   }
+  this.router.navigate([], { queryParams: queryParams });
+}
 }
