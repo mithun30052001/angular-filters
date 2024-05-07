@@ -34,4 +34,11 @@ export class LocationComponent extends GenericSelectionComponent{
   updateLocation(event: any) {
     super.updateOption(event, 'location');
   }
+  
+  resetFilter(paramKey: string) {
+    const queryParams = { ...this.route.snapshot.queryParams };
+    delete queryParams[paramKey];
+    this.router.navigate([], { queryParams: queryParams });
+    this.selectedLocation = '';
+  }
 }

@@ -5,7 +5,7 @@
       <mat-icon>filter_list</mat-icon>
     </button>
   </div>
-  <mat-radio-group (change)="updateTiming($event)">
+  <mat-radio-group [value]="selectedTiming" (change)="updateTiming($event)">
     <mat-list-item *ngFor="let timing of timings">
       <mat-radio-button [id]="timing.id" [value]="timing.value"
                         [checked]="timing.value === selectedTiming">

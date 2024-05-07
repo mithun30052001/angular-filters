@@ -5,7 +5,7 @@
       <mat-icon>filter_list</mat-icon>
     </button>
   </div>
-  <mat-radio-group (change)="updateLocation($event)">
+  <mat-radio-group [value]="selectedLocation" (change)="updateLocation($event)">
     <mat-list-item *ngFor="let location of locations">
       <mat-radio-button [id]="location.id" [value]="location.value" 
                         [checked]="location.value === selectedLocation">

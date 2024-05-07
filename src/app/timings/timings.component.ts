@@ -26,4 +26,11 @@ export class TimingsComponent extends GenericSelectionComponent{
   updateTiming(event: any) {
     super.updateOption(event, 'timings');
   }
+
+  resetFilter(paramKey: string) {
+    const queryParams = { ...this.route.snapshot.queryParams };
+    delete queryParams[paramKey];
+    this.router.navigate([], { queryParams: queryParams });
+    this.selectedTiming = '';
+  }
 }
