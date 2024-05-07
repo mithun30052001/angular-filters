@@ -15,6 +15,7 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatListModule } from '@angular/material/list';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatPaginatorModule } from '@angular/material/paginator';
+import { TimingsComponent } from './timings/timings.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,8 @@ import { MatPaginatorModule } from '@angular/material/paginator';
     ReferralsComponent,
     BelowMenuComponent,
     MenuListComponent,
-    MainComponent
+    MainComponent,
+    TimingsComponent
 
   ],
   imports: [
