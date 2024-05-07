@@ -15,6 +15,7 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatListModule } from '@angular/material/list';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatIconModule } from '@angular/material/icon';
 import { TimingsComponent } from './timings/timings.component';
 import { FormsModule } from '@angular/forms';
 
@@ -38,7 +39,8 @@ import { FormsModule } from '@angular/forms';
     MatListModule,
     MatRadioModule,
     MatPaginatorModule,
-    FormsModule
+    FormsModule,
+    MatIconModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
