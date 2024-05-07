@@ -1,0 +1,11 @@
+<mat-nav-list class="below-menu">
+    <h3 mat-subheader>Job timing</h3>
+    <mat-list-item *ngFor="let timing of timings">
+      <mat-radio-button [id]="timing.id" [value]="timing.value" 
+                        (change)="updateTiming($event)"
+                        [checked]="timing.value === selectedTiming">
+        {{ timing.value }}
+      </mat-radio-button>
+    </mat-list-item>
+  </mat-nav-list>
+  
