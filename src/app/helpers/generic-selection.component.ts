@@ -10,7 +10,14 @@ export class GenericSelectionComponent  {
 
   constructor(protected router: Router,protected route: ActivatedRoute) { }
 
-  
+  setSelectedOption(paramKey: string): string {
+    let selectedOptionValue = '';
+    this.route.queryParams.subscribe(params => {
+      selectedOptionValue = params[paramKey];
+    });
+    return selectedOptionValue;
+  }
+
   updateOption(option: any,queryParamKey: string) {
     const value = option.value;
     const queryParams = { ...this.route.snapshot.queryParams };
