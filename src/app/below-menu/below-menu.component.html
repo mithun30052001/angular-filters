@@ -1,10 +1,11 @@
 <mat-nav-list class="below-menu">
   <h3 mat-subheader>Job Location</h3>
-  <mat-list-item *ngFor="let location of locations">
+  <mat-radio-group (change)="updateLocation($event)">
+    <mat-list-item *ngFor="let location of locations">
     <mat-radio-button [id]="location.id" [value]="location.value" 
-                      (change)="updateLocation($event)"
                       [checked]="location.value === selectedLocation">
       {{ location.value }}
     </mat-radio-button>
-  </mat-list-item>
+    </mat-list-item>
+  </mat-radio-group>
 </mat-nav-list>
