@@ -15,6 +15,7 @@ export class JobsListingComponent implements OnInit, AfterViewInit {
   pageSizeOptions: number[] = [5, 10, 25, 100];
   itemsPerPage: number = 5;
   location: string = '';
+  timings: string = '';
 
   constructor(
     private route: ActivatedRoute,
@@ -30,6 +31,7 @@ export class JobsListingComponent implements OnInit, AfterViewInit {
 
     this.route.queryParams.subscribe(params => {
       this.location = params['location'] || '';
+      this.timings = params['timings'] || '';
       this.itemsPerPage = +params['itemsPerPage'] || 5;
       this.applyFilter();
     });
@@ -49,6 +51,7 @@ export class JobsListingComponent implements OnInit, AfterViewInit {
       this.router.navigate([], {
         queryParams: {
           location: this.location,
+          timings: this.timings,
           itemsPerPage: this.itemsPerPage
         }
       });
@@ -57,17 +60,18 @@ export class JobsListingComponent implements OnInit, AfterViewInit {
   }
 
   private applyFilter() {
+    this.filteredJobListings = [...this.jobListings];
     if (this.location) {
-      this.filteredJobListings = this.jobListings.filter(job => job.location.toLowerCase() === this.location.toLowerCase());
-    } else {
-      this.filteredJobListings = this.jobListings;
+      this.filteredJobListings = this.filteredJobListings.filter(job => job.location.toLowerCase() === this.location.toLowerCase());
     }
-
+    if (this.timings) {
+      this.filteredJobListings = this.filteredJobListings.filter(job => job.timePreference?.toLowerCase() === this.timings.toLowerCase());
+    }
     if (this.paginator) {
       const startIndex = this.paginator.pageIndex * this.itemsPerPage;
       const endIndex = startIndex + this.itemsPerPage;
       this.filteredJobListings = this.filteredJobListings.slice(startIndex, endIndex);
-    }else{
+    } else {
       this.filteredJobListings = this.filteredJobListings.slice(0, this.itemsPerPage);
     }
   }
