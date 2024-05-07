@@ -1,9 +1,6 @@
 import { Component, Inject, InjectionToken, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
-@Component({
-  template: ''
-})
 export class GenericSelectionComponent  {
   options: any[] = [];
   selectedOption: string = '';
@@ -22,6 +19,6 @@ export class GenericSelectionComponent  {
     const value = option.value;
     const queryParams = { ...this.route.snapshot.queryParams };
     queryParams[queryParamKey] = value;
-    this.router.navigate([], { queryParams: queryParams });
+    this.router.navigate([], { queryParams: queryParams,relativeTo:this.route,queryParamsHandling: 'merge' });
   }
 }
