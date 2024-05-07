@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { GenericSelectionComponent } from '../helpers/generic-selection.component';
 
 @Component({
   selector: 'app-below-menu',
@@ -7,10 +8,12 @@ import { ActivatedRoute, Router } from '@angular/router';
   styleUrls: ['./below-menu.component.scss']
 })
 
-export class BelowMenuComponent {
+export class BelowMenuComponent extends GenericSelectionComponent{
   locations:any = [];
   selectedLocation: string = '';
-  constructor(private router: Router, private route: ActivatedRoute) { }
+  constructor(router: Router,route: ActivatedRoute) {
+    super(router, route);
+   }
 
   ngOnInit(): void {
     this.locations = [
@@ -31,8 +34,6 @@ export class BelowMenuComponent {
   }
 
   updateLocation(event: any) {
-    console.log("Event",event);
-    const location = event.value;
-    this.router.navigate(['/jobs'], { queryParams: { location: location } });
+    super.updateOption(event, 'location');
   }
 }
