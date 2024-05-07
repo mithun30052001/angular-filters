@@ -16,6 +16,7 @@ import { MatListModule } from '@angular/material/list';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { TimingsComponent } from './timings/timings.component';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -27,7 +28,6 @@ import { TimingsComponent } from './timings/timings.component';
     MenuListComponent,
     MainComponent,
     TimingsComponent
-
   ],
   imports: [
     BrowserModule,
@@ -37,7 +37,8 @@ import { TimingsComponent } from './timings/timings.component';
     MatSidenavModule,
     MatListModule,
     MatRadioModule,
-    MatPaginatorModule
+    MatPaginatorModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
