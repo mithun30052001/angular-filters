@@ -10,14 +10,15 @@ import { GenericSelectionComponent } from '../helpers/generic-selection';
 export class TimingsComponent extends GenericSelectionComponent{
   timings:any = [];
   selectedTiming: string = '';
-  constructor(router: Router, route: ActivatedRoute) { 
+  constructor(router: Router, route: ActivatedRoute) {
     super(router, route);
   }
 
   ngOnInit(): void {
     this.timings = [
       { id: 'night', value: 'Night shift' },
-      { id: 'day', value: 'Day shift' }
+      { id: 'day', value: 'Day shift' },
+      { id: 'notGiven', value: 'Not given' }
     ];
     this.selectedTiming = this.setSelectedOption('timings');
   }

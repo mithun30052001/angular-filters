@@ -65,7 +65,11 @@ export class JobsListingComponent implements OnInit, AfterViewInit {
       this.filteredJobListings = this.filteredJobListings.filter(job => job.location.toLowerCase() === this.location.toLowerCase());
     }
     if (this.timings) {
-      this.filteredJobListings = this.filteredJobListings.filter(job => job.timePreference?.toLowerCase() === this.timings.toLowerCase());
+      if(this.timings=='Not given'){
+        this.filteredJobListings = this.filteredJobListings.filter(job => job.timePreference?.toLowerCase() == null);
+      }else{
+        this.filteredJobListings = this.filteredJobListings.filter(job => job.timePreference?.toLowerCase() === this.timings.toLowerCase());
+      }
     }
     if (this.paginator) {
       const startIndex = this.paginator.pageIndex * this.itemsPerPage;
