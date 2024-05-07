@@ -67,4 +67,32 @@ export class JobsService {
     ];
     return of(jobListings);
   }
+
+  filterJobListings(params: any, jobListings: any[]): any[] {
+    let filteredListings = [...jobListings];
+
+    if (params.location) {
+      filteredListings = filteredListings.filter(job => job.location.toLowerCase() === params.location.toLowerCase());
+    }
+
+    if (params.timings) {
+      if (params.timings === 'Not given') {
+        filteredListings = filteredListings.filter(job => !job.timePreference);
+      } else {
+        filteredListings = filteredListings.filter(job => job.timePreference?.toLowerCase() === params.timings.toLowerCase());
+      }
+    }
+
+    if (params.searchTerm) {
+      const searchTerm = params.searchTerm.toLowerCase();
+      filteredListings = filteredListings.filter(job =>
+        job.title.toLowerCase().includes(searchTerm) ||
+        job.details.toLowerCase().includes(searchTerm) ||
+        job.experience.toLowerCase().includes(searchTerm) ||
+        job.location.toLowerCase().includes(searchTerm)
+      );
+    }
+
+    return filteredListings;
+  }
 }
