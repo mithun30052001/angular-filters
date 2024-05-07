@@ -15,12 +15,6 @@ export class GenericSelectionComponent  {
     return selectedOptionValue;
   }
   
-  resetFilter(paramKey: string) {
-    const queryParams = { ...this.route.snapshot.queryParams };
-    delete queryParams[paramKey];
-    this.router.navigate([], { queryParams: queryParams });
-  }
-  
   updateOption(option: any,queryParamKey: string) {
     const value = option.value;
     const queryParams = { ...this.route.snapshot.queryParams };
