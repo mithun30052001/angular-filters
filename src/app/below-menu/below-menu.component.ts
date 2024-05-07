@@ -28,9 +28,7 @@ export class BelowMenuComponent extends GenericSelectionComponent{
       { id: 'us', value: 'US' },
       { id: 'manila', value: 'Manila' }
     ];
-    this.route.queryParams.subscribe(params => {
-      this.selectedLocation = params['location'];
-    });
+    this.selectedLocation = this.setSelectedOption('location');
   }
 
   updateLocation(event: any) {

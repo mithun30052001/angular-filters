@@ -19,9 +19,7 @@ export class TimingsComponent extends GenericSelectionComponent{
       { id: 'night', value: 'Night shift' },
       { id: 'day', value: 'Day shift' }
     ];
-    this.route.queryParams.subscribe(params => {
-      this.selectedTiming = params['timings'];
-    });
+    this.selectedTiming = this.setSelectedOption('timings');
   }
 
   updateTiming(event: any) {
