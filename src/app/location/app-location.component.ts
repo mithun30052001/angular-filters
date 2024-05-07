@@ -3,12 +3,12 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { GenericSelectionComponent } from '../helpers/generic-selection.component';
 
 @Component({
-  selector: 'app-below-menu',
-  templateUrl: './below-menu.component.html',
-  styleUrls: ['./below-menu.component.scss']
+  selector: 'app-location',
+  templateUrl: './app-location.component.html',
+  styleUrls: ['./app-location.component.scss']
 })
 
-export class BelowMenuComponent extends GenericSelectionComponent{
+export class LocationComponent extends GenericSelectionComponent{
   locations:any = [];
   selectedLocation: string = '';
   constructor(router: Router,route: ActivatedRoute) {

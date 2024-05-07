@@ -5,7 +5,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AppSidebarComponent } from './app-sidebar/app-sidebar.component';
 import { MenuListComponent } from './menu-list/menu-list.component';
-import { BelowMenuComponent } from './below-menu/below-menu.component';
+import { LocationComponent } from './location/app-location.component';
 import { JobsListingComponent } from './jobs-listing/jobs-listing.component';
 import { ReferralsComponent } from './referrals/referrals.component';
 import { MainComponent } from './main-component/main-component.component';
@@ -24,7 +24,7 @@ import { FormsModule } from '@angular/forms';
     AppSidebarComponent,
     JobsListingComponent,
     ReferralsComponent,
-    BelowMenuComponent,
+    LocationComponent,
     MenuListComponent,
     MainComponent,
     TimingsComponent
