@@ -1,5 +1,10 @@
 <mat-nav-list class="below-menu">
-  <h3 mat-subheader>Job timing</h3>
+  <div class="header-container">
+    <h3 mat-subheader>Job timing</h3>
+    <button mat-mini-fab color="warn" aria-label="Example icon button with a filter list icon"  (click)="resetFilter('timings')">
+      <mat-icon>filter_list</mat-icon>
+    </button>
+  </div>
   <mat-radio-group (change)="updateTiming($event)">
     <mat-list-item *ngFor="let timing of timings">
       <mat-radio-button [id]="timing.id" [value]="timing.value"
