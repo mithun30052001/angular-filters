@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { GenericSelectionComponent } from '../helpers/generic-selection.component';
+import { GenericSelectionComponent } from '../helpers/generic-selection';
 
 @Component({
   selector: 'app-timings',
