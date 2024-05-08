@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { JobsService } from '../services/job.services';
-import { GenericSelectionComponent } from '../helpers/generic-selection';
+import { GenericSelectionComponent } from '../models/generic-selection';
 
 @Component({
   selector: 'app-jobs-listing',

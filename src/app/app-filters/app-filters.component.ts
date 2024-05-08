@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { GenericSelectionComponent } from '../helpers/generic-selection';
+import { GenericSelectionComponent } from '../models/generic-selection';
 
 @Component({
   selector: 'app-filters',
@@ -25,9 +25,9 @@ export class AppFiltersComponent extends GenericSelectionComponent{
     super.updateOption(event,this.paramKey);
   }
   
-  resetFilter(paramKey: string) {
+  resetFilter() {
     const queryParams = { ...this.route.snapshot.queryParams };
-    delete queryParams[paramKey];
+    delete queryParams[this.paramKey];
     this.router.navigate([], { queryParams: queryParams });
     this.selectedChoice = '';
   }
