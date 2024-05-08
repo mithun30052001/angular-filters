@@ -41,7 +41,9 @@ export class JobsListingComponent extends GenericSelectionComponent implements O
         };
         this.filteredJobListings = this.jobsService.filterJobListings(params, this.jobListings);
         this.updateOption({value: this.itemsPerPage},'itemsPerPage','searchTerm',this.searchTerm);
-        this.filteredJobListings = this.jobsService.paginate(this.filteredJobListings,this.paginator.pageIndex, this.itemsPerPage);
+        if(this.paginator){
+          this.filteredJobListings = this.jobsService.paginate(this.filteredJobListings,this.paginator.pageIndex, this.itemsPerPage);
+        }
       });
     });
   }
