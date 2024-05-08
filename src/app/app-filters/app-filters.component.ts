@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { GenericSelectionComponent } from '../helpers/generic-selection';
+import { GenericSelectionComponent } from '../models/generic-selection';
 
 @Component({
   selector: 'app-filters',
