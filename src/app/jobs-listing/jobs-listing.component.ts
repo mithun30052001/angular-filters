@@ -34,8 +34,13 @@ export class JobsListingComponent extends GenericSelectionComponent implements O
 
       this.jobsService.getJobListings().subscribe(jobListings => {
         this.jobListings = jobListings;
-        this.filterJobListings();
-        this.updateQueryParams();
+        const params: any = {
+          location: this.location,
+          timings: this.timings,
+          searchTerm: this.searchTerm
+        };
+        this.filteredJobListings = this.jobsService.filterJobListings(params, this.jobListings);
+        this.updateOption({value: this.itemsPerPage},'itemsPerPage','searchTerm',this.searchTerm);
         this.filteredJobListings = this.jobsService.paginate(this.filteredJobListings,this.paginator.pageIndex, this.itemsPerPage);
       });
     });
@@ -49,27 +54,13 @@ export class JobsListingComponent extends GenericSelectionComponent implements O
 
   onPageChange(event: PageEvent) {
     this.itemsPerPage = event.pageSize;
-    this.updateQueryParams();
+    this.updateOption({value: this.itemsPerPage},'itemsPerPage','searchTerm',this.searchTerm);
     this.filteredJobListings = this.jobsService.paginate(this.filteredJobListings,this.paginator.pageIndex, this.itemsPerPage);
   }
 
   onSearch(searchTerm: string) {
     this.searchTerm = searchTerm.trim().toLowerCase();
-    this.updateQueryParams();
+    this.updateOption({value: this.itemsPerPage},'itemsPerPage','searchTerm',this.searchTerm);
     this.filteredJobListings = this.jobsService.paginate(this.filteredJobListings,this.paginator.pageIndex, this.itemsPerPage);
-  }
-
-  private filterJobListings() {
-    const params: any = {
-      location: this.location,
-      timings: this.timings,
-      searchTerm: this.searchTerm
-    };
-    this.filteredJobListings = this.jobsService.filterJobListings(params, this.jobListings);
-  }
-
-  private updateQueryParams() {
-    super.updateOption({value: this.itemsPerPage}, 
-                      'itemsPerPage','searchTerm',this.searchTerm);
   }
 }
