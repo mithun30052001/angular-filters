@@ -15,10 +15,13 @@ export class GenericSelectionComponent  {
     return selectedOptionValue;
   }
   
-  updateOption(option: any,queryParamKey: string) {
+  updateOption(option: any,queryParamKey: string,searchParamKey?: string, searchParamValue?: any) {
     const value = option.value;
     const queryParams = { ...this.route.snapshot.queryParams };
     queryParams[queryParamKey] = value;
+    if (searchParamKey) {
+      queryParams[searchParamKey] = searchParamValue;
+    }
     this.router.navigate([], { queryParams: queryParams,relativeTo:this.route,queryParamsHandling: 'merge' });
   }
 }
