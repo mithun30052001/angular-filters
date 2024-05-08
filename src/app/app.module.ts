@@ -5,7 +5,6 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AppSidebarComponent } from './app-sidebar/app-sidebar.component';
 import { MenuListComponent } from './menu-list/menu-list.component';
-import { LocationComponent } from './location/app-location.component';
 import { JobsListingComponent } from './jobs-listing/jobs-listing.component';
 import { ReferralsComponent } from './referrals/referrals.component';
 import { MainComponent } from './main-component/main-component.component';
@@ -17,7 +16,6 @@ import { MatRadioModule } from '@angular/material/radio';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { SearchBoxComponent } from './search-box/search-box.component';
 import { MatIconModule } from '@angular/material/icon';
-import { TimingsComponent } from './timings/timings.component';
 import { FormsModule } from '@angular/forms';
 import { AppFiltersComponent } from './app-filters/app-filters.component';
 
@@ -27,11 +25,9 @@ import { AppFiltersComponent } from './app-filters/app-filters.component';
     AppSidebarComponent,
     JobsListingComponent,
     ReferralsComponent,
-    LocationComponent,
     MenuListComponent,
     MainComponent,
     SearchBoxComponent,
-    TimingsComponent,
     AppFiltersComponent
   ],
   imports: [
