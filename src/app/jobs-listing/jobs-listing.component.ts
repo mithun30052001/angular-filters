@@ -2,13 +2,14 @@ import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { JobsService } from '../services/job.services';
+import { GenericSelectionComponent } from '../helpers/generic-selection';
 
 @Component({
   selector: 'app-jobs-listing',
   templateUrl: './jobs-listing.component.html',
   styleUrls: ['./jobs-listing.component.scss']
 })
-export class JobsListingComponent implements OnInit, AfterViewInit {
+export class JobsListingComponent extends GenericSelectionComponent implements OnInit, AfterViewInit  {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   jobListings: any[] = [];
   filteredJobListings: any[] = [];
@@ -19,10 +20,10 @@ export class JobsListingComponent implements OnInit, AfterViewInit {
   searchTerm: string = '';
 
   constructor(
-    private route: ActivatedRoute,
-    private router: Router,
+     route: ActivatedRoute,
+     router: Router,
     private jobsService: JobsService
-  ) { }
+  ) {super(router, route); }
 
   ngOnInit(): void {
     this.route.queryParams.subscribe(params => {
@@ -68,20 +69,13 @@ export class JobsListingComponent implements OnInit, AfterViewInit {
   }
 
   private paginate() {
-    const startIndex = this.paginator.pageIndex * this.itemsPerPage;
+    const startIndex = this.paginator? (this.paginator.pageIndex * this.itemsPerPage) : 0;
     const endIndex = startIndex + this.itemsPerPage;
     this.filteredJobListings = this.filteredJobListings.slice(startIndex, endIndex);
   }
 
   private updateQueryParams() {
-    const queryParams: any = {
-      location: this.location,
-      timings: this.timings,
-      itemsPerPage: this.itemsPerPage,
-    };
-    if (this.searchTerm) {
-      queryParams.searchTerm = this.searchTerm;
-    }
-    this.router.navigate([], { queryParams: queryParams });
+    super.updateOption({value: this.itemsPerPage}, 
+                      'itemsPerPage','searchTerm',this.searchTerm);
   }
 }
