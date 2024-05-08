@@ -22,7 +22,7 @@ export class AppFiltersComponent extends GenericSelectionComponent{
   }
 
   updateFilter(event: any) {
-    super.updateOption(event,this.paramKey);
+    this.updateOption({[this.paramKey]: event.value})
   }
   
   resetFilter() {

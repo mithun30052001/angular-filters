@@ -20,12 +20,11 @@ export class GenericSelectionComponent  {
     return selectedOptionValue;
   }
   
-  updateOption(option: any,queryParamKey: string,searchParamKey?: string, searchParamValue?: any) {
-    const value = option.value;
-    const queryParams = { ...this.route.snapshot.queryParams };
-    queryParams[queryParamKey] = value;
-    if (searchParamKey) {
-      queryParams[searchParamKey] = searchParamValue;
+  updateOption(option: {[key: string]: any}, searchParam?: { [key: string]: string }){
+    const queryParams = { ...this.route.snapshot.queryParams,...option };
+    if (searchParam) {
+      const searchParamKey = Object.keys(searchParam).toString();
+      queryParams[searchParamKey] = Object.values(searchParam);
     }
     this.router.navigate([], { queryParams: queryParams,relativeTo:this.route,queryParamsHandling: 'merge' });
   }

@@ -84,7 +84,7 @@ export class JobsService {
     }
 
     if (params.searchTerm) {
-      const searchTerm = params.searchTerm.toLowerCase();
+      const searchTerm = params.searchTerm.toString().toLowerCase();
       filteredListings = filteredListings.filter(job =>
         job.title.toLowerCase().includes(searchTerm) ||
         job.details.toLowerCase().includes(searchTerm) ||
