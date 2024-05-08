@@ -19,6 +19,7 @@ import { SearchBoxComponent } from './search-box/search-box.component';
 import { MatIconModule } from '@angular/material/icon';
 import { TimingsComponent } from './timings/timings.component';
 import { FormsModule } from '@angular/forms';
+import { AppFiltersComponent } from './app-filters/app-filters.component';
 
 @NgModule({
   declarations: [
@@ -30,7 +31,8 @@ import { FormsModule } from '@angular/forms';
     MenuListComponent,
     MainComponent,
     SearchBoxComponent,
-    TimingsComponent
+    TimingsComponent,
+    AppFiltersComponent
   ],
   imports: [
     BrowserModule,
