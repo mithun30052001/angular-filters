@@ -8,21 +8,22 @@ import { GenericSelectionComponent } from '../models/generic-selection';
   templateUrl: './app-filters.component.html',
   styleUrls: ['./app-filters.component.scss']
 })
-
-export class AppFiltersComponent extends GenericSelectionComponent implements OnDestroy {
+export class AppFiltersComponent implements OnDestroy {
   @Input() choices:any = []
   @Input() paramKey:string = '';
   @Input() header:string = '';
   selectedChoice: string = '';
   private queryParamsSubscription!: Subscription;
 
-  constructor(router: Router,route: ActivatedRoute) {
-    super(router, route);
-   }
+  constructor(
+    private router: Router,
+    private route: ActivatedRoute,
+    private genericSelection: GenericSelectionComponent
+  ) { }
 
   ngOnInit(): void {
-    this.selectedChoice = this.setSelectedOption(this.paramKey);
-    this.queryParamsSubscription = this.allQueryParams$.subscribe(params => {
+    this.selectedChoice = this.genericSelection.setSelectedOption(this.paramKey);
+    this.queryParamsSubscription = this.genericSelection.allQueryParams$.subscribe(params => {
       console.log("Inside app filters", params);
     });
   }
@@ -34,9 +35,9 @@ export class AppFiltersComponent extends GenericSelectionComponent implements On
   }
 
   updateFilter(event: any) {
-    this.updateOption({[this.paramKey]: event.value})
+    this.genericSelection.updateOption({[this.paramKey]: event.value})
   }
-  
+
   resetFilter() {
     const queryParams = { ...this.route.snapshot.queryParams };
     delete queryParams[this.paramKey];
