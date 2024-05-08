@@ -1,11 +1,16 @@
 import { Component, Inject, InjectionToken, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { BehaviorSubject } from 'rxjs';
 
 export class GenericSelectionComponent  {
   options: any[] = [];
   selectedOption: string = '';
-
-  constructor(protected router: Router,protected route: ActivatedRoute) { }
+  allQueryParams$: BehaviorSubject<object> = new BehaviorSubject<object>({});
+  constructor(protected router: Router,protected route: ActivatedRoute) { 
+    this.route.queryParams.subscribe(params => {
+      this.allQueryParams$.next(params);
+    });
+  }
 
   setSelectedOption(paramKey: string): string {
     let selectedOptionValue = '';
