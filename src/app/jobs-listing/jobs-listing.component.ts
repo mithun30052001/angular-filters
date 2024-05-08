@@ -36,7 +36,7 @@ export class JobsListingComponent extends GenericSelectionComponent implements O
         this.jobListings = jobListings;
         this.filterJobListings();
         this.updateQueryParams();
-        this.paginate();
+        this.filteredJobListings = this.jobsService.paginate(this.filteredJobListings,this.paginator.pageIndex, this.itemsPerPage);
       });
     });
   }
@@ -50,13 +50,13 @@ export class JobsListingComponent extends GenericSelectionComponent implements O
   onPageChange(event: PageEvent) {
     this.itemsPerPage = event.pageSize;
     this.updateQueryParams();
-    this.paginate();
+    this.filteredJobListings = this.jobsService.paginate(this.filteredJobListings,this.paginator.pageIndex, this.itemsPerPage);
   }
 
   onSearch(searchTerm: string) {
     this.searchTerm = searchTerm.trim().toLowerCase();
     this.updateQueryParams();
-    this.paginate();
+    this.filteredJobListings = this.jobsService.paginate(this.filteredJobListings,this.paginator.pageIndex, this.itemsPerPage);
   }
 
   private filterJobListings() {
@@ -66,12 +66,6 @@ export class JobsListingComponent extends GenericSelectionComponent implements O
       searchTerm: this.searchTerm
     };
     this.filteredJobListings = this.jobsService.filterJobListings(params, this.jobListings);
-  }
-
-  private paginate() {
-    const startIndex = this.paginator? (this.paginator.pageIndex * this.itemsPerPage) : 0;
-    const endIndex = startIndex + this.itemsPerPage;
-    this.filteredJobListings = this.filteredJobListings.slice(startIndex, endIndex);
   }
 
   private updateQueryParams() {

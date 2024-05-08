@@ -95,4 +95,10 @@ export class JobsService {
 
     return filteredListings;
   }
+
+  paginate(data: any[], pageIndex: number, pageSize: number){
+    const startIndex = pageIndex * pageSize;
+    const endIndex = startIndex + pageSize;
+    return data.slice(startIndex, endIndex);
+  }
 }
