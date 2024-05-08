@@ -9,7 +9,7 @@ import { GenericSelectionComponent } from '../models/generic-selection';
   templateUrl: './jobs-listing.component.html',
   styleUrls: ['./jobs-listing.component.scss']
 })
-export class JobsListingComponent extends GenericSelectionComponent implements OnInit, AfterViewInit  {
+export class JobsListingComponent implements OnInit, AfterViewInit {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   jobListings: any[] = [];
   filteredJobListings: any[] = [];
@@ -20,10 +20,11 @@ export class JobsListingComponent extends GenericSelectionComponent implements O
   searchTerm: string = '';
 
   constructor(
-     route: ActivatedRoute,
-     router: Router,
-    private jobsService: JobsService
-  ) {super(router, route); }
+    private route: ActivatedRoute,
+    private router: Router,
+    private jobsService: JobsService,
+    private genericSelectionService: GenericSelectionComponent
+  ) { }
 
   ngOnInit(): void {
     this.route.queryParams.subscribe(params => {
@@ -31,18 +32,13 @@ export class JobsListingComponent extends GenericSelectionComponent implements O
       this.timings = params['timings'] || '';
       this.itemsPerPage = +params['itemsPerPage'] || 5;
       this.searchTerm = params['searchTerm'] || '';
-
       this.jobsService.getJobListings().subscribe(jobListings => {
         this.jobListings = jobListings;
-        const params: any = {
-          location: this.location,
-          timings: this.timings,
-          searchTerm: this.searchTerm
-        };
+        const params: any = { location: this.location, timings: this.timings, searchTerm: this.searchTerm };
         this.filteredJobListings = this.jobsService.filterJobListings(params, this.jobListings);
-        this.updateOption({value: this.itemsPerPage},'itemsPerPage','searchTerm',this.searchTerm);
-        if(this.paginator){
-          this.filteredJobListings = this.jobsService.paginate(this.filteredJobListings,this.paginator.pageIndex, this.itemsPerPage);
+        this.genericSelectionService.updateOption({ value: this.itemsPerPage }, 'itemsPerPage', 'searchTerm', this.searchTerm);
+        if (this.paginator) {
+          this.filteredJobListings = this.jobsService.paginate(this.filteredJobListings, this.paginator.pageIndex, this.itemsPerPage);
         }
       });
     });
@@ -56,13 +52,13 @@ export class JobsListingComponent extends GenericSelectionComponent implements O
 
   onPageChange(event: PageEvent) {
     this.itemsPerPage = event.pageSize;
-    this.updateOption({value: this.itemsPerPage},'itemsPerPage','searchTerm',this.searchTerm);
-    this.filteredJobListings = this.jobsService.paginate(this.filteredJobListings,this.paginator.pageIndex, this.itemsPerPage);
+    this.genericSelectionService.updateOption({ value: this.itemsPerPage }, 'itemsPerPage', 'searchTerm', this.searchTerm);
+    this.filteredJobListings = this.jobsService.paginate(this.filteredJobListings, this.paginator.pageIndex, this.itemsPerPage);
   }
 
   onSearch(searchTerm: string) {
     this.searchTerm = searchTerm.trim().toLowerCase();
-    this.updateOption({value: this.itemsPerPage},'itemsPerPage','searchTerm',this.searchTerm);
-    this.filteredJobListings = this.jobsService.paginate(this.filteredJobListings,this.paginator.pageIndex, this.itemsPerPage);
+    this.genericSelectionService.updateOption({ value: this.itemsPerPage }, 'itemsPerPage', 'searchTerm', this.searchTerm);
+    this.filteredJobListings = this.jobsService.paginate(this.filteredJobListings, this.paginator.pageIndex, this.itemsPerPage);
   }
 }
