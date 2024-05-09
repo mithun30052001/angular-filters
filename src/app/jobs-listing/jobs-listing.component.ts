@@ -1,15 +1,16 @@
-import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
+import { Component, OnInit, ViewChild, AfterViewInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { JobsService } from '../services/job.services';
 import { GenericSelectionComponent } from '../models/generic-selection';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-jobs-listing',
   templateUrl: './jobs-listing.component.html',
   styleUrls: ['./jobs-listing.component.scss']
 })
-export class JobsListingComponent extends GenericSelectionComponent implements OnInit, AfterViewInit  {
+export class JobsListingComponent extends GenericSelectionComponent implements OnInit, AfterViewInit,OnDestroy  {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   jobListings: any[] = [];
   filteredJobListings: any[] = [];
@@ -18,7 +19,8 @@ export class JobsListingComponent extends GenericSelectionComponent implements O
   location: string = '';
   timings: string = '';
   searchTerm: string = '';
-
+  private queryParamsSubscription!: Subscription;
+  
   constructor(
      route: ActivatedRoute,
      router: Router,
@@ -46,12 +48,21 @@ export class JobsListingComponent extends GenericSelectionComponent implements O
         }
       });
     });
+    this.queryParamsSubscription = this.allQueryParams$.subscribe(params => {
+        console.log("Inside job listing",params);
+    });
   }
 
   ngAfterViewInit(): void {
     this.paginator?.page.subscribe((event: PageEvent) => {
       this.onPageChange(event);
     });
+  }
+  
+  ngOnDestroy(): void {
+    if (this.queryParamsSubscription) {
+      this.queryParamsSubscription.unsubscribe();
+    }
   }
 
   onPageChange(event: PageEvent) {
