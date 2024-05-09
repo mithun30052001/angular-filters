@@ -1,15 +1,16 @@
 import { Component } from '@angular/core';
-import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-sidebar',
   templateUrl: './app-sidebar.component.html',
-  styleUrls: ['./app-sidebar.component.scss']
+  styleUrls: ['./app-sidebar.component.scss'],
 })
 export class AppSidebarComponent {
   isJobsRoute: boolean = false;
-  locations:any = [];
-  timings:any = [];
+  locations: any = [];
+  timings: any = [];
+  isReferrals: boolean = false;
   constructor(private router: Router) {}
 
   ngOnInit() {
@@ -23,15 +24,16 @@ export class AppSidebarComponent {
       { id: 'vellore', value: 'Vellore' },
       { id: 'ahmedabad', value: 'Ahmedabad' },
       { id: 'us', value: 'US' },
-      { id: 'manila', value: 'Manila' }
+      { id: 'manila', value: 'Manila' },
     ];
     this.timings = [
       { id: 'night', value: 'Night shift' },
       { id: 'day', value: 'Day shift' },
-      { id: 'notGiven', value: 'Not given' }
+      { id: 'notGiven', value: 'Not given' },
     ];
     this.router.events.subscribe(() => {
-        this.isJobsRoute = this.router.url.includes('/jobs');
+      this.isJobsRoute = this.router.url.includes('/jobs');
+      this.isReferrals = this.router.url.includes('/referrals');
     });
   }
 }
