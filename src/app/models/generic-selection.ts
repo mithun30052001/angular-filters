@@ -44,12 +44,14 @@ export class GenericSelectionComponent {
    * @param searchParamValue The value of the search parameter (optional).
    */
 
-  updateOption(option: {[key: string]: any}, searchParam?: { [key: string]: string }){
+  updateOption(option: {[key: string]: any}){
     const queryParams = { ...this.route.snapshot.queryParams,...option };
-    if (searchParam) {
-      const searchParamKey = Object.keys(searchParam).toString();
-      queryParams[searchParamKey] = Object.values(searchParam);
-    }
     this.router.navigate([], { queryParams: queryParams,relativeTo:this.route,queryParamsHandling: 'merge' });
+  }
+
+  resetOption(paramKey: string){
+    const queryParams = { ...this.route.snapshot.queryParams };
+    delete queryParams[paramKey];
+    this.router.navigate([], { queryParams: queryParams });
   }
 }

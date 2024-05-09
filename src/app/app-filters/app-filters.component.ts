@@ -39,9 +39,7 @@ export class AppFiltersComponent implements OnDestroy {
   }
 
   resetFilter() {
-    const queryParams = { ...this.route.snapshot.queryParams };
-    delete queryParams[this.paramKey];
-    this.router.navigate([], { queryParams: queryParams });
+    this.genericSelection.resetOption(this.paramKey);
     this.selectedChoice = '';
   }
 }

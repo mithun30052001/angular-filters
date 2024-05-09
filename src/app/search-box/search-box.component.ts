@@ -1,4 +1,6 @@
 import { Component, Output, EventEmitter } from '@angular/core';
+import { GenericSelectionComponent } from '../models/generic-selection';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'search-box',
@@ -8,9 +10,16 @@ import { Component, Output, EventEmitter } from '@angular/core';
 export class SearchBoxComponent {
   @Output() search = new EventEmitter<string>();
 
-  constructor() { }
+  constructor(private genericSelection: GenericSelectionComponent,private router: Router,private route: ActivatedRoute) { }
 
   onSearchChange(searchTerm: string) {
     this.search.emit(searchTerm);
+    const searchParam = searchTerm.trim();
+    if(searchTerm.length > 0){
+      this.genericSelection.updateOption({'searchTerm': searchParam});
+    }
+    else{
+      this.genericSelection.resetOption('searchTerm');
+    }
   }
 }

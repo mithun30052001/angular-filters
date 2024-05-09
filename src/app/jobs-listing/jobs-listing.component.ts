@@ -29,20 +29,11 @@ export class JobsListingComponent implements OnInit, AfterViewInit,OnDestroy  {
   ) { }
 
   ngOnInit(): void {
-    this.route.queryParams.subscribe(params => {
-      this.location = params['location'] || '';
-      this.timings = params['timings'] || '';
-      this.itemsPerPage = +params['itemsPerPage'] || 5;
-      this.searchTerm = params['searchTerm'] || '';
+    this.queryParamsSubscription = this.genericSelection.allQueryParams$.subscribe(params =>  {
       this.jobsService.getJobListings().subscribe(jobListings => {
         this.jobListings = jobListings;
-        const params: any = { 
-          location: this.location, 
-          timings: this.timings, 
-          searchTerm: this.searchTerm 
-        };
         this.filteredJobListings = this.jobsService.filterJobListings(params, this.jobListings);
-        this.genericSelection.updateOption({ 'itemsPerPage': this.itemsPerPage },{'searchTerm': this.searchTerm});
+        this.genericSelection.updateOption({ 'itemsPerPage': this.itemsPerPage });
         if(this.paginator){
           this.filteredJobListings = this.jobsService.paginate(this.filteredJobListings, this.paginator.pageIndex, this.itemsPerPage);
         }
@@ -67,13 +58,7 @@ export class JobsListingComponent implements OnInit, AfterViewInit,OnDestroy  {
 
   onPageChange(event: PageEvent) {
     this.itemsPerPage = event.pageSize;
-    this.genericSelection.updateOption({ 'itemsPerPage': this.itemsPerPage },{'searchTerm': this.searchTerm});
+    this.genericSelection.updateOption({ 'itemsPerPage': this.itemsPerPage });
     this.filteredJobListings = this.jobsService.paginate(this.filteredJobListings, this.paginator.pageIndex, this.itemsPerPage);
-  }
-
-  onSearch(searchTerm: string) {
-    this.searchTerm = searchTerm.trim().toLowerCase();
-    this.genericSelection.updateOption({ 'itemsPerPage': this.itemsPerPage },{'searchTerm': this.searchTerm});
-    this.filteredJobListings = this.jobsService.paginate(this.filteredJobListings, this.paginator?.pageIndex, this.itemsPerPage);
   }
 }
