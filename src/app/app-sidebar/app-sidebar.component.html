@@ -5,4 +5,8 @@
     <app-filters [choices]="timings" [paramKey]="'timings'" [header]="'Job timing'"></app-filters>
   </ng-template>
 
+  <ng-template [ngIf]="isReferrals">
+    <app-filters [choices]="timings" [paramKey]="'timings'" [header]="'Job timing'"></app-filters>
+  </ng-template>
+
 </div>

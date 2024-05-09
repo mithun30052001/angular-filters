@@ -1,43 +1,25 @@
-import { Component, OnInit } from '@angular/core';
-import { JobsService } from '../services/job.services';
-import { Observable } from 'rxjs';
+import { Component } from '@angular/core';
+import { GenericSelectionComponent } from 'src/app/models/generic-selection';
+import { JobsService } from 'src/app/services/job.services';
 
 @Component({
   selector: 'app-referrals',
   templateUrl: './referrals.component.html',
-  styleUrls: ['./referrals.component.scss']
+  styleUrls: ['./referrals.component.scss'],
 })
-export class ReferralsComponent implements OnInit {
-  jobsData: any[] = [];
-  filteredJobsData: any[] = [];
-  searchTerm: string = '';
-  currentPage: number = 1;
-  pageSize: number = 5;
+export class ReferralsComponent {
+  params: any;
+  referrals: any[] = [];
 
-  constructor(private jobsService: JobsService) { }
+  constructor(
+    private genericSelection: GenericSelectionComponent,
+    private jobsService: JobsService
+  ) {}
 
-  ngOnInit(): void {
-    this.loadJobs();
-  }
-
-  loadJobs() {
-    this.jobsService.getJobListings().subscribe((data: any[]) => {
-      this.jobsData = data;
-      this.filteredJobsData = data;
+  ngOnInit() {
+    this.genericSelection.allQueryParams$.subscribe((params) => {
+      this.params = params;
+      this.referrals = this.jobsService.getJobListings(params);
     });
-  }
-
-  onPageChange(event: any) {
-    this.currentPage = event.pageIndex + 1;
-  }
-
-  onSearch(searchTerm: string) {
-    this.searchTerm = searchTerm.trim().toLowerCase();
-    this.filteredJobsData = this.jobsData.filter(job =>
-      job.details.toLowerCase().includes(this.searchTerm) ||
-      job.location.toLowerCase().includes(this.searchTerm) ||
-      job.type.toLowerCase().includes(this.searchTerm)
-    );
-    this.currentPage = 1;
   }
 }

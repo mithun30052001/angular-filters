@@ -1,18 +1,3 @@
-  <app-generic-search-pagination [jobsData]="jobsData">
-    <div *ngFor="let job of jobsData">
-      <mat-card>
-        <mat-card-content>
-          <div class="card-body">
-            <p>Details: {{ job.details }}</p>
-            <p>Location: {{ job.location }}</p>
-            <p>Preferred Time: {{ job.timePreference == null ? '-' : job.timePreference }}</p>
-          </div>
-        </mat-card-content>
-        <mat-card-actions>
-          <div class="card-footer">
-            <p>{{ job.type }}</p>
-          </div>
-        </mat-card-actions>
-      </mat-card>
-    </div>
-  </app-generic-search-pagination>
+<filter-consumer-container>
+  {{ referrals | json }}
+</filter-consumer-container>

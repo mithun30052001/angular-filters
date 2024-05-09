@@ -18,7 +18,7 @@ import { SearchBoxComponent } from './search-box/search-box.component';
 import { MatIconModule } from '@angular/material/icon';
 import { FormsModule } from '@angular/forms';
 import { AppFiltersComponent } from './app-filters/app-filters.component';
-import { AppGenericSearchPaginationComponent } from './app-generic-search-pagination/app-generic-search-pagination.component';
+import { FilterConsumerContainerComponent } from './filter-consumer-container/filter-consumer-container.component';
 
 @NgModule({
   declarations: [
@@ -30,7 +30,7 @@ import { AppGenericSearchPaginationComponent } from './app-generic-search-pagina
     MainComponent,
     SearchBoxComponent,
     AppFiltersComponent,
-    AppGenericSearchPaginationComponent
+    FilterConsumerContainerComponent
   ],
   imports: [
     BrowserModule,
