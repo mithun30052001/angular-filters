@@ -19,6 +19,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { FormsModule } from '@angular/forms';
 import { AppFiltersComponent } from './app-filters/app-filters.component';
 import { FilterConsumerContainerComponent } from './filter-consumer-container/filter-consumer-container.component';
+import { PaginationComponent } from './pagination/pagination.component';
 
 @NgModule({
   declarations: [
@@ -30,7 +31,8 @@ import { FilterConsumerContainerComponent } from './filter-consumer-container/fi
     MainComponent,
     SearchBoxComponent,
     AppFiltersComponent,
-    FilterConsumerContainerComponent
+    FilterConsumerContainerComponent,
+    PaginationComponent
   ],
   imports: [
     BrowserModule,

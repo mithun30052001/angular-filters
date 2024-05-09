@@ -1,6 +1,7 @@
 <div class="search-box">
-  <search-box />
+  <search-box></search-box>
 </div>
+
 <div class="job-listings">
   <ng-container *ngIf="filteredJobListings.length > 0; else noJobs">
     <mat-card *ngFor="let job of filteredJobListings">
@@ -31,13 +32,9 @@
       </mat-card-content>
     </mat-card>
   </ng-template>
-</div>
-
-<div class="footer" *ngIf="filteredJobListings.length > 0">
-  <mat-paginator
-    [length]="filteredJobListings.length"
-    [pageSize]="itemsPerPage"
-    [pageSizeOptions]="pageSizeOptions"
-    (page)="onPageChange($event)">
-  </mat-paginator>
+  <pagination
+    [totalItems]="filteredJobListings.length"
+    [itemsPerPage]="itemsPerPage"
+    (pageChange)="onPageChange($event)"
+  ></pagination>
 </div>
