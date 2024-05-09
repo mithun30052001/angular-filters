@@ -11,11 +11,11 @@ export class SearchBoxComponent {
 
   constructor(private genericSelection: GenericSelectionComponent) { }
 
-  onSearchChange(searchTerm: string) {
-    this.search.emit(searchTerm);
-    const searchParam = searchTerm.trim();
-    if(searchTerm.length > 0){
-      this.genericSelection.updateOption({'searchTerm': searchParam});
+  onSearchChange(event: any) {
+    const searchParam = event?.target?.value;
+    if(searchParam){
+      this.search.emit(searchParam.trim());
+      this.genericSelection.updateOption({'searchTerm': searchParam.trim()});
     }
     else{
       this.genericSelection.resetOption('searchTerm');
