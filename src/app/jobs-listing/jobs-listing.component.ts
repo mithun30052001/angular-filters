@@ -12,7 +12,6 @@ import { PaginationComponent } from '../pagination/pagination.component';
   styleUrls: ['./jobs-listing.component.scss'],
 })
 export class JobsListingComponent implements OnInit, AfterViewInit, OnDestroy {
-  @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(PaginationComponent) paginationComponent!: PaginationComponent;
   filteredJobListings: any[] = [];
   pageSizeOptions: number[] = [5, 10, 25, 100];
@@ -36,8 +35,8 @@ export class JobsListingComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngAfterViewInit(): void {
-    if (this.paginator) {
-      this.paginator.page.subscribe((event: PageEvent) => {
+    if (this.paginationComponent && this.paginationComponent.paginator) {
+      this.paginationComponent.paginator.page.subscribe((event: PageEvent) => {
         this.onPageChange(event);
       });
     }
@@ -56,14 +55,15 @@ export class JobsListingComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   updatePagination() {
-    if (this.paginator) {
-      const startIndex = this.paginator.pageIndex * this.paginator.pageSize;
-      const endIndex = startIndex + this.paginator.pageSize;
+    if (this.paginationComponent && this.paginationComponent.paginator) {
+      const startIndex = this.paginationComponent.paginator.pageIndex * this.itemsPerPage;
+      const endIndex = startIndex + this.itemsPerPage;
       this.filteredJobListings = this.jobsService.paginate(
         this.filteredJobListings,
-        this.paginator.pageIndex,
+        this.paginationComponent.paginator.pageIndex,
         this.itemsPerPage
       );
     }
   }
+
 }
