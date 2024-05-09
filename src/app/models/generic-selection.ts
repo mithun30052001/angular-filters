@@ -3,7 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class GenericSelectionComponent {
   options: any[] = [];
@@ -17,7 +17,7 @@ export class GenericSelectionComponent {
    */
 
   constructor(private router: Router, private route: ActivatedRoute) {
-    this.route.queryParams.subscribe(params => {
+    this.route.queryParams.subscribe((params) => {
       this.allQueryParams$.next(params);
     });
   }
@@ -30,7 +30,7 @@ export class GenericSelectionComponent {
 
   setSelectedOption(paramKey: string): string {
     let selectedOptionValue = '';
-    this.route.queryParams.subscribe(params => {
+    this.route.queryParams.subscribe((params) => {
       selectedOptionValue = params[paramKey];
     });
     return selectedOptionValue;
@@ -44,12 +44,16 @@ export class GenericSelectionComponent {
    * @param searchParamValue The value of the search parameter (optional).
    */
 
-  updateOption(option: {[key: string]: any}, searchParam?: { [key: string]: string }){
-    const queryParams = { ...this.route.snapshot.queryParams,...option };
-    if (searchParam) {
-      const searchParamKey = Object.keys(searchParam).toString();
-      queryParams[searchParamKey] = Object.values(searchParam);
-    }
-    this.router.navigate([], { queryParams: queryParams,relativeTo:this.route,queryParamsHandling: 'merge' });
+  updateOption(option: { [key: string]: any }) {
+    const queryParams = { ...this.route.snapshot.queryParams, ...option };
+    // if (searchParam) {
+    // const searchParamKey = Object.keys(searchParam).toString();
+    // queryParams[searchParamKey] = Object.values(searchParam);
+    // }
+    this.router.navigate([], {
+      queryParams: queryParams,
+      relativeTo: this.route,
+      queryParamsHandling: 'merge',
+    });
   }
 }
