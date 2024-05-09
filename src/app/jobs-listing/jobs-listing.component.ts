@@ -29,27 +29,6 @@ export class JobsListingComponent implements OnInit, AfterViewInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    // this.route.queryParams.subscribe((params) => {
-    //   this.location = params['location'] || '';
-    //   this.timings = params['timings'] || '';
-    //   this.itemsPerPage = +params['itemsPerPage'] || 5;
-    //   this.searchTerm = params['searchTerm'] || '';
-    //   this.jobsService.getJobListings().subscribe((jobListings) => {
-    //     this.jobListings = jobListings;
-    //     const params: any = {
-    //       location: this.location,
-    //       timings: this.timings,
-    //       searchTerm: this.searchTerm,
-    //     };
-    //     this.filteredJobListings = this.jobsService.filterJobListings(
-    //       params,
-    //       this.jobListings
-    //     );
-    //     this.genericSelection.updateOption(
-    //       { itemsPerPage: this.itemsPerPage }
-    //     );
-    //   });
-    // });
     this.queryParamsSubscription =
       this.genericSelection.allQueryParams$.subscribe((params) => {
         console.log('Inside job listing', params);
