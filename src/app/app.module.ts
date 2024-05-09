@@ -18,6 +18,7 @@ import { SearchBoxComponent } from './search-box/search-box.component';
 import { MatIconModule } from '@angular/material/icon';
 import { FormsModule } from '@angular/forms';
 import { AppFiltersComponent } from './app-filters/app-filters.component';
+import { AppGenericSearchPaginationComponent } from './app-generic-search-pagination/app-generic-search-pagination.component';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,8 @@ import { AppFiltersComponent } from './app-filters/app-filters.component';
     MenuListComponent,
     MainComponent,
     SearchBoxComponent,
-    AppFiltersComponent
+    AppFiltersComponent,
+    AppGenericSearchPaginationComponent
   ],
   imports: [
     BrowserModule,
