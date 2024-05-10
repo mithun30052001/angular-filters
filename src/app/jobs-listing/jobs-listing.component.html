@@ -1,10 +1,7 @@
-<div class="search-box">
-  <search-box />
-</div>
-
+<filter-consumer-container [filteredListings]="jobs" (filteredListingsChange)="updateJobs($event)">
 <div class="job-listings">
-  <ng-container *ngIf="filteredJobListings.length > 0; else noJobs">
-    <mat-card *ngFor="let job of filteredJobListings">
+  <ng-container *ngIf="filteredJobs.length > 0; else noJobs">
+    <mat-card *ngFor="let job of filteredJobs">
       <mat-card-header>
         <div class="card-header">
           <h3>{{ job.title }}</h3>
@@ -32,8 +29,5 @@
       </mat-card-content>
     </mat-card>
   </ng-template>
-  <pagination
-    [totalItems]="filteredJobListings.length"
-    [itemsPerPage]="itemsPerPage"
-  ></pagination>
 </div>
+</filter-consumer-container>
