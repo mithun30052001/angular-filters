@@ -8,7 +8,6 @@ import { JobsService } from 'src/app/services/job.services';
   styleUrls: ['./referrals.component.scss'],
 })
 export class ReferralsComponent {
-  params: any;
   referrals: any[] = [];
   filteredReferrals: any[] = [];
 
@@ -19,7 +18,6 @@ export class ReferralsComponent {
 
   ngOnInit() {
     this.genericSelection.allQueryParams$.subscribe((params) => {
-      this.params = params;
       this.referrals = this.jobsService.getJobListings(params);
     });
   }

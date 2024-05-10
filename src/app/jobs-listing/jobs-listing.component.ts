@@ -8,7 +8,6 @@ import { GenericSelectionComponent } from '../models/generic-selection';
   styleUrls: ['./jobs-listing.component.scss'],
 })
 export class JobsListingComponent implements OnInit{
-  params: any;
   jobs: any[] = [];
   filteredJobs: any[] = [];
 
@@ -19,7 +18,6 @@ export class JobsListingComponent implements OnInit{
 
   ngOnInit() {
     this.genericSelection.allQueryParams$.subscribe((params) => {
-      this.params = params;
       this.jobs = this.jobsService.getJobListings(params);
     });
   }
