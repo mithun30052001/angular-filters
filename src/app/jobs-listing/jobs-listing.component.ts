@@ -30,6 +30,9 @@ export class JobsListingComponent implements OnInit, AfterViewInit, OnDestroy {
       this.genericSelection.allQueryParams$.subscribe((params) => {
         console.log('Inside job listing', params);
         this.filteredJobListings = this.jobsService.getJobListings(params);
+        if ('itemsPerPage' in params) {
+          this.itemsPerPage = parseInt(params['itemsPerPage']as string);
+        }
         this.updatePagination();
       });
   }
@@ -55,12 +58,12 @@ export class JobsListingComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   updatePagination() {
-    if (this.paginationComponent && this.paginationComponent.paginator) {
-      const startIndex = this.paginationComponent.paginator.pageIndex * this.itemsPerPage;
+    if (this.itemsPerPage) {
+      const startIndex = this.paginationComponent? this.paginationComponent.paginator.pageIndex * this.itemsPerPage : 0;
       const endIndex = startIndex + this.itemsPerPage;
       this.filteredJobListings = this.jobsService.paginate(
         this.filteredJobListings,
-        this.paginationComponent.paginator.pageIndex,
+        this.paginationComponent? this.paginationComponent.paginator.pageIndex: 0,
         this.itemsPerPage
       );
     }
