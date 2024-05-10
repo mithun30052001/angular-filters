@@ -447,10 +447,6 @@ export class JobsService {
   }
   constructor() {}
 
-  // getJobListings(): Observable<any[]> {
-  //   return of(jobListings);
-  // }
-
   getJobListings(params: any): any[] {
     console.log('params going to API:> ', params);
     let filteredListings = [...this.data];
@@ -486,11 +482,5 @@ export class JobsService {
     }
 
     return filteredListings;
-  }
-
-  paginate(data: any[], pageIndex: number, pageSize: number) {
-    const startIndex = pageIndex * pageSize;
-    const endIndex = startIndex + pageSize;
-    return data.slice(startIndex, endIndex);
   }
 }
