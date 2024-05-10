@@ -3,5 +3,8 @@
   <ng-content></ng-content>
 </div>
 <div class="footer">
-
+  <pagination
+    [totalItems]="filteredListings.length"
+    [itemsPerPage]="itemsPerPage"
+  ></pagination>
 </div>
