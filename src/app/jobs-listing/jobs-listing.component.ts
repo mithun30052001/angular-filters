@@ -4,7 +4,6 @@ import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { JobsService } from '../services/job.services';
 import { GenericSelectionComponent } from '../models/generic-selection';
 import { Subscription } from 'rxjs';
-import { PaginationComponent } from '../pagination/pagination.component';
 
 @Component({
   selector: 'app-jobs-listing',
@@ -12,7 +11,6 @@ import { PaginationComponent } from '../pagination/pagination.component';
   styleUrls: ['./jobs-listing.component.scss'],
 })
 export class JobsListingComponent implements OnInit, OnDestroy {
-  @ViewChild(PaginationComponent) paginationComponent!: PaginationComponent;
   filteredJobListings: any[] = [];
   pageSizeOptions: number[] = [5, 10, 25, 100];
   itemsPerPage: number = 5;
