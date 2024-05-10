@@ -33,26 +33,13 @@ export class JobsListingComponent implements OnInit, OnDestroy {
         if ('itemsPerPage' in params) {
           this.itemsPerPage = parseInt(params['itemsPerPage']as string);
         }
-        this.updatePagination();
+        this.filteredJobListings = this.filteredJobListings.slice(0,this.itemsPerPage);
       });
   }
- 
+  
   ngOnDestroy(): void {
     if (this.queryParamsSubscription) {
       this.queryParamsSubscription.unsubscribe();
     }
   }
-
-  updatePagination() {
-    if (this.itemsPerPage) {
-      const startIndex = this.paginationComponent? this.paginationComponent.paginator.pageIndex * this.itemsPerPage : 0;
-      const endIndex = startIndex + this.itemsPerPage;
-      this.filteredJobListings = this.jobsService.paginate(
-        this.filteredJobListings,
-        this.paginationComponent? this.paginationComponent.paginator.pageIndex: 0,
-        this.itemsPerPage
-      );
-    }
-  }
-
 }
