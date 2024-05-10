@@ -12,7 +12,6 @@ export class SearchBoxComponent {
   constructor(private genericSelection: GenericSelectionComponent) {}
 
   onSearchChange(event: any) {
-    console.log(event);
     const searchParam = event?.target?.value;
     if(searchParam){
       this.search.emit(searchParam.trim());

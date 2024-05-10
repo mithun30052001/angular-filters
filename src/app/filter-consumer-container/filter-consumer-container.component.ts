@@ -23,14 +23,14 @@ export class FilterConsumerContainerComponent {
   ngOnInit(): void {
     this.queryParamsSubscription =
       this.genericSelection.allQueryParams$.subscribe((params) => {
-        console.log('Inside referral listing in generic', params);
+        console.log('Params Inside filter consumer', params);
         this.filteredListings = this.jobsService.getJobListings(params);
         if ('itemsPerPage' in params) {
           this.itemsPerPage = parseInt(params['itemsPerPage']as string);
         }
         this.filteredListings = this.filteredListings.slice(0,this.itemsPerPage);
         this.filteredListingsChange.emit(this.filteredListings); 
-        console.log("List in referral",this.filteredListings);
+
       });
   }
   
