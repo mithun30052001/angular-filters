@@ -11,7 +11,6 @@ import { GenericSelectionComponent } from '../models/generic-selection';
 export class PaginationComponent {
   @Input() totalItems: number = 0;
   @Input() itemsPerPage: number = 10;
-  @Input() filteredJobListings: any[] = [];
   @Output() filteredJobListingsChange = new EventEmitter<any[]>();
   
   currentPageIndex: number = 0;
