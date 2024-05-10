@@ -46,14 +46,20 @@ export class GenericSelectionComponent {
 
   updateOption(option: { [key: string]: any }) {
     const queryParams = { ...this.route.snapshot.queryParams, ...option };
-    // if (searchParam) {
-    // const searchParamKey = Object.keys(searchParam).toString();
-    // queryParams[searchParamKey] = Object.values(searchParam);
-    // }
     this.router.navigate([], {
       queryParams: queryParams,
       relativeTo: this.route,
       queryParamsHandling: 'merge',
     });
+  }
+  
+  /**
+   * Reset a particular query paramter
+   * @param paramKey The key of the query parameter to be deleted..
+   */
+  resetOption(paramKey: string){
+    const queryParams = { ...this.route.snapshot.queryParams };
+    delete queryParams[paramKey];
+    this.router.navigate([], { queryParams: queryParams });
   }
 }

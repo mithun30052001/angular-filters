@@ -9,14 +9,17 @@ import { GenericSelectionComponent } from 'src/app/models/generic-selection';
 export class SearchBoxComponent {
   @Output() search = new EventEmitter<string>();
 
-  constructor(private gs: GenericSelectionComponent) {}
+  constructor(private genericSelection: GenericSelectionComponent) {}
 
   onSearchChange(event: any) {
     console.log(event);
-    const searchTerm = event?.target?.value;
-    if (searchTerm) {
-      this.search.emit(searchTerm.trim());
-      this.gs.updateOption({ searchTerm: searchTerm.trim() });
+    const searchParam = event?.target?.value;
+    if(searchParam){
+      this.search.emit(searchParam.trim());
+      this.genericSelection.updateOption({'searchTerm': searchParam.trim()});
+    }
+    else{
+      this.genericSelection.resetOption('searchTerm');
     }
   }
 }
