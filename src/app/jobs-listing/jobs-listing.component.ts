@@ -11,7 +11,7 @@ import { PaginationComponent } from '../pagination/pagination.component';
   templateUrl: './jobs-listing.component.html',
   styleUrls: ['./jobs-listing.component.scss'],
 })
-export class JobsListingComponent implements OnInit, AfterViewInit, OnDestroy {
+export class JobsListingComponent implements OnInit, OnDestroy {
   @ViewChild(PaginationComponent) paginationComponent!: PaginationComponent;
   filteredJobListings: any[] = [];
   pageSizeOptions: number[] = [5, 10, 25, 100];
@@ -36,25 +36,11 @@ export class JobsListingComponent implements OnInit, AfterViewInit, OnDestroy {
         this.updatePagination();
       });
   }
-
-  ngAfterViewInit(): void {
-    if (this.paginationComponent && this.paginationComponent.paginator) {
-      this.paginationComponent.paginator.page.subscribe((event: PageEvent) => {
-        this.onPageChange(event);
-      });
-    }
-  }
-
+ 
   ngOnDestroy(): void {
     if (this.queryParamsSubscription) {
       this.queryParamsSubscription.unsubscribe();
     }
-  }
-
-  onPageChange(event: PageEvent) {
-    this.itemsPerPage = event.pageSize;
-    this.genericSelection.updateOption({ itemsPerPage: this.itemsPerPage });
-    this.updatePagination();
   }
 
   updatePagination() {

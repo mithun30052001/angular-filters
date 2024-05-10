@@ -35,6 +35,6 @@
   <pagination
     [totalItems]="filteredJobListings.length"
     [itemsPerPage]="itemsPerPage"
-    (pageChange)="onPageChange($event)"
+    [filteredJobListings]="filteredJobListings"
   ></pagination>
 </div>
