@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { JobsService } from '../services/job.services';
 import { GenericSelectionComponent } from '../models/generic-selection';
@@ -10,6 +10,7 @@ import { GenericSelectionComponent } from '../models/generic-selection';
 })
 export class FilterConsumerContainerComponent {
   @Input() filteredListings: any[] = [];
+  @Output() filteredListingsChange: EventEmitter<any[]> = new EventEmitter<any[]>();
   pageSizeOptions: number[] = [5, 10, 25, 100];
   itemsPerPage: number = 5;
   private queryParamsSubscription!: Subscription;
@@ -28,6 +29,7 @@ export class FilterConsumerContainerComponent {
           this.itemsPerPage = parseInt(params['itemsPerPage']as string);
         }
         this.filteredListings = this.filteredListings.slice(0,this.itemsPerPage);
+        this.filteredListingsChange.emit(this.filteredListings); 
         console.log("List in referral",this.filteredListings);
       });
   }
