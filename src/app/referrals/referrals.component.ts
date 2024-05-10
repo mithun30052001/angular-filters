@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { GenericSelectionComponent } from 'src/app/models/generic-selection';
 import { JobsService } from 'src/app/services/job.services';
 
@@ -10,7 +10,8 @@ import { JobsService } from 'src/app/services/job.services';
 export class ReferralsComponent {
   params: any;
   referrals: any[] = [];
-
+  @Input() data: any;
+  
   constructor(
     private genericSelection: GenericSelectionComponent,
     private jobsService: JobsService
@@ -22,4 +23,10 @@ export class ReferralsComponent {
       this.referrals = this.jobsService.getJobListings(params);
     });
   }
+
+  handleFilteredJobListingsChange(filteredJobListings: any[]) {
+    this.referrals = filteredJobListings;
+    console.log('Filtered Job Listings Changed:', filteredJobListings.length);
+  }
+  
 }
