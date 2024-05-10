@@ -10,6 +10,7 @@ import { JobsService } from 'src/app/services/job.services';
 export class ReferralsComponent {
   params: any;
   referrals: any[] = [];
+  filteredReferrals: any[] = [];
 
   constructor(
     private genericSelection: GenericSelectionComponent,
@@ -21,5 +22,9 @@ export class ReferralsComponent {
       this.params = params;
       this.referrals = this.jobsService.getJobListings(params);
     });
+  }
+
+  updateReferrals(newListings: any[]): void {
+    this.filteredReferrals = newListings;
   }
 }
