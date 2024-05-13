@@ -12,6 +12,7 @@ export class FilterConsumerContainerComponent implements OnInit, OnDestroy {
   @Input() filteredListings: any[] = [];
   @Output() filteredListingsChange: EventEmitter<any[]> = new EventEmitter<any[]>();
   itemsPerPage: number = 5;
+  startIndex: number  = 0;
   private queryParamsSubscription!: Subscription;
 
   constructor(private jobsService: JobsService, private genericSelection: GenericSelectionComponent) {}
@@ -24,12 +25,9 @@ export class FilterConsumerContainerComponent implements OnInit, OnDestroy {
       }
       if ('pageIndex' in params) {
         const pageIndex = params['pageIndex'] ? parseInt(params['pageIndex'] as string, 10) : 0;
-        const startIndex = pageIndex * this.itemsPerPage;
-        const endIndex = startIndex + this.itemsPerPage;
-        this.filteredListings = this.jobsService.getJobListings(params).slice(startIndex, endIndex);
-      } else {
-        this.filteredListings = this.jobsService.getJobListings(params).slice(0, this.itemsPerPage);
-      }
+        this.startIndex = pageIndex * this.itemsPerPage;
+      } 
+      this.filteredListings = this.jobsService.getJobListings(params).slice(this.startIndex, this.startIndex+ this.itemsPerPage);
       this.filteredListingsChange.emit(this.filteredListings);
     });
   }
