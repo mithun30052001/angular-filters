@@ -7,19 +7,19 @@ import { GenericSelectionComponent } from 'src/app/models/generic-selection';
   templateUrl: './sort-box.component.html',
   styleUrls: ['./sort-box.component.scss'],
 })
-export class SortBoxComponent implements OnInit,OnDestroy {
+export class SortBoxComponent implements OnInit, OnDestroy {
   @Output() sort = new EventEmitter<string>();
   selectedSort: any = '';
   private queryParamsSubscription!: Subscription;
 
   constructor(private genericSelection: GenericSelectionComponent) {}
-  
+
   ngOnInit(): void {
     this.queryParamsSubscription = this.genericSelection.allQueryParams$.subscribe((params) => {
       if ('sort' in params) {
         this.selectedSort = params['sort']
       } else{
-        this.selectedSort = '';
+        this.selectedSort = 'old';
       }
     });
   }
@@ -30,13 +30,13 @@ export class SortBoxComponent implements OnInit,OnDestroy {
     }
   }
 
-  onSortChange(event: any) {
-    const sortParam = event?.target?.value;
-    if (sortParam) {
-      this.sort.emit(sortParam);
-      this.genericSelection.updateOption({'sort': sortParam });
+  toggleSort(sortType: string): void {
+    if (this.selectedSort === sortType) {
+      this.selectedSort = sortType === 'old' ? 'new' : 'old';
     } else {
-      this.genericSelection.resetOption('sort');
+      this.selectedSort = sortType;
     }
+    this.sort.emit(this.selectedSort);
+    this.genericSelection.updateOption({ 'sort': this.selectedSort });
   }
 }

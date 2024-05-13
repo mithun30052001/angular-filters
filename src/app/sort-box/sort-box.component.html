@@ -1,5 +1,11 @@
-<select (change)="onSortChange($event)" [ngModel]="selectedSort">
-  <option value="">Sort by</option>
-  <option value="old">Old post</option>
-  <option value="new">New post</option>
-</select>
+<div class="sort-container">
+  <span class="sort-label">Sort by:</span>
+  <a (click)="toggleSort('old')" [class.active]="selectedSort === 'old'">
+    <span *ngIf="selectedSort === 'old'">Oldest first</span>
+    <span *ngIf="selectedSort !== 'old'">Newest first</span>
+  </a>
+  <span class="sort-arrows">
+    <i class="material-icons" (click)="toggleSort('new')" [class.active]="selectedSort === 'new'">arrow_upward</i>
+    <i class="material-icons" (click)="toggleSort('old')" [class.active]="selectedSort === 'old'">arrow_downward</i>
+  </span>
+</div>
