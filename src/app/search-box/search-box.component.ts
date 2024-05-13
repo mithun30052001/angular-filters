@@ -1,4 +1,5 @@
-import { Component, Output, EventEmitter } from '@angular/core';
+import { Component, Output, EventEmitter, OnInit } from '@angular/core';
+import { Subscription } from 'rxjs';
 import { GenericSelectionComponent } from 'src/app/models/generic-selection';
 
 @Component({
@@ -6,10 +7,20 @@ import { GenericSelectionComponent } from 'src/app/models/generic-selection';
   templateUrl: './search-box.component.html',
   styleUrls: ['./search-box.component.scss'],
 })
-export class SearchBoxComponent {
+export class SearchBoxComponent implements OnInit {
   @Output() search = new EventEmitter<string>();
+  private queryParamsSubscription!: Subscription;
+  searchValue: any = '';
 
   constructor(private genericSelection: GenericSelectionComponent) {}
+
+  ngOnInit() {
+    this.queryParamsSubscription = this.genericSelection.allQueryParams$.subscribe((params) => {
+      if ('searchTerm' in params) {
+        this.searchValue = params['searchTerm'] || '';
+      }
+    });
+  }
 
   onSearchChange(event: any) {
     const searchParam = event?.target?.value;
