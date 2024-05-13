@@ -12,7 +12,7 @@ export class FilterConsumerContainerComponent implements OnInit, OnDestroy {
   @Input() filteredListings: any[] = [];
   @Output() filteredListingsChange: EventEmitter<any[]> = new EventEmitter<any[]>();
   itemsPerPage: number = 5;
-  startIndex: number  = 0;
+  startIndex: number = 0;
   private queryParamsSubscription!: Subscription;
 
   constructor(private jobsService: JobsService, private genericSelection: GenericSelectionComponent) {}
@@ -26,12 +26,15 @@ export class FilterConsumerContainerComponent implements OnInit, OnDestroy {
       if ('pageIndex' in params) {
         const pageIndex = params['pageIndex'] ? parseInt(params['pageIndex'] as string, 10) : 0;
         this.startIndex = pageIndex * this.itemsPerPage;
-      } 
-      this.filteredListings = this.jobsService.getJobListings(params).slice(this.startIndex, this.startIndex+ this.itemsPerPage);
-      this.filteredListingsChange.emit(this.filteredListings);
+      }
+      const paginatedListings = this.jobsService.getJobListings(params).slice(this.startIndex, this.startIndex + this.itemsPerPage);
+      if (paginatedListings.length === 0 && this.startIndex > 0) {
+        this.genericSelection.updateOption({ pageIndex: 0 });
+      }
+      this.filteredListingsChange.emit(paginatedListings);
     });
   }
-  
+
   ngOnDestroy(): void {
     if (this.queryParamsSubscription) {
       this.queryParamsSubscription.unsubscribe();
