@@ -17,7 +17,9 @@ export class SearchBoxComponent implements OnInit {
   ngOnInit() {
     this.queryParamsSubscription = this.genericSelection.allQueryParams$.subscribe((params) => {
       if ('searchTerm' in params) {
-        this.searchValue = params['searchTerm'] || '';
+        this.searchValue = params['searchTerm']
+      }else{
+        this.searchValue = '';
       }
     });
   }
