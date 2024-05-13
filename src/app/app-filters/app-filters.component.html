@@ -1,0 +1,17 @@
+<mat-nav-list class="below-location">
+    <div class="header-container">
+      <h3 mat-subheader>{{ header }}</h3>
+      <button mat-mini-fab color="warn" aria-label="Example icon button with a filter list icon"  (click)="resetFilter()">
+        <mat-icon>filter_list</mat-icon>
+      </button>
+    </div>
+    <mat-radio-group [(ngModel)]="selectedChoice" (change)="updateFilter($event)">
+      <mat-list-item *ngFor="let choice of choices">
+        <mat-radio-button [id]="choice.id" [value]="choice.value" 
+                          [checked]="choice.value === selectedChoice">
+          {{ choice.value }}
+        </mat-radio-button>
+      </mat-list-item>
+    </mat-radio-group>
+  </mat-nav-list>
+  

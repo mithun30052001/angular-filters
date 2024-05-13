@@ -1,0 +1,12 @@
+<div class="sidebar">
+  <app-menu-list></app-menu-list>
+  <ng-template [ngIf]="isJobsRoute">
+    <app-filters [choices]="locations" [paramKey]="'location'" [header]="'Job Location'"></app-filters>
+    <app-filters [choices]="timings" [paramKey]="'timings'" [header]="'Job timing'"></app-filters>
+  </ng-template>
+
+  <ng-template [ngIf]="isReferrals">
+    <app-filters [choices]="timings" [paramKey]="'timings'" [header]="'Job timing'"></app-filters>
+  </ng-template>
+
+</div>

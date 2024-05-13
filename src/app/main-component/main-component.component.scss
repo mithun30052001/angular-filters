@@ -1,0 +1,12 @@
+.complete-menu {
+  display: flex;
+}
+
+.web-drawer-content {
+  position: absolute;
+  top: 0;
+  left: 250px;
+  right: 0;
+  bottom: 0;
+  overflow-y: auto;
+}

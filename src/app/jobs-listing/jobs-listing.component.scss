@@ -1,0 +1,22 @@
+
+.job-listings {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 20px;
+}
+
+mat-card {
+  width: 100%;
+}
+
+.footer {
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-end;
+  margin-top: 20px;
+}
+
+.search-box {
+  margin-bottom: 20px;
+
+}
