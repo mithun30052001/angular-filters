@@ -1,4 +1,4 @@
-import { Component, Output, EventEmitter, OnInit } from '@angular/core';
+import { Component, Output, EventEmitter, OnInit, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { GenericSelectionComponent } from 'src/app/models/generic-selection';
 
@@ -7,7 +7,7 @@ import { GenericSelectionComponent } from 'src/app/models/generic-selection';
   templateUrl: './search-box.component.html',
   styleUrls: ['./search-box.component.scss'],
 })
-export class SearchBoxComponent implements OnInit {
+export class SearchBoxComponent implements OnInit,OnDestroy {
   @Output() search = new EventEmitter<string>();
   private queryParamsSubscription!: Subscription;
   searchValue: any = '';
@@ -22,6 +22,12 @@ export class SearchBoxComponent implements OnInit {
         this.searchValue = '';
       }
     });
+  }
+  
+  ngOnDestroy(): void {
+    if (this.queryParamsSubscription) {
+      this.queryParamsSubscription.unsubscribe();
+    }
   }
 
   onSearchChange(event: any) {
