@@ -481,6 +481,10 @@ export class JobsService {
       );
     }
 
+    if (params.sort && params.sort === 'new') {
+      filteredListings = filteredListings.reverse();
+    }
+
     return filteredListings;
   }
 }
