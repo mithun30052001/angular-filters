@@ -26,15 +26,26 @@ export class FilterConsumerContainerComponent implements OnInit, OnDestroy {
       if ('pageIndex' in params) {
         const pageIndex = params['pageIndex'] ? parseInt(params['pageIndex'] as string, 10) : 0;
         this.startIndex = pageIndex * this.itemsPerPage;
-      } 
+      }
       this.filteredListings = this.jobsService.getJobListings(params).slice(this.startIndex, this.startIndex+ this.itemsPerPage);
       this.filteredListingsChange.emit(this.filteredListings);
     });
   }
-  
+
   ngOnDestroy(): void {
     if (this.queryParamsSubscription) {
       this.queryParamsSubscription.unsubscribe();
+    }
+  }
+
+  sortListings(sortOption: string) {
+    if (sortOption === 'old') {
+      this.filteredListings.sort((a, b) => a.date - b.date);
+      console.log("1");
+    } else if (sortOption === 'new') {
+      console.log("2");
+
+      this.filteredListings.sort((a, b) => b.date - a.date);
     }
   }
 }

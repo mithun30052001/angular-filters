@@ -20,6 +20,7 @@ import { FormsModule } from '@angular/forms';
 import { AppFiltersComponent } from './app-filters/app-filters.component';
 import { FilterConsumerContainerComponent } from './filter-consumer-container/filter-consumer-container.component';
 import { PaginationComponent } from './pagination/pagination.component';
+import { SortBoxComponent } from './sort-box/sort-box.component';
 
 @NgModule({
   declarations: [
@@ -32,7 +33,8 @@ import { PaginationComponent } from './pagination/pagination.component';
     SearchBoxComponent,
     AppFiltersComponent,
     FilterConsumerContainerComponent,
-    PaginationComponent
+    PaginationComponent,
+    SortBoxComponent
   ],
   imports: [
     BrowserModule,
