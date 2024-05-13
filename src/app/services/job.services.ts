@@ -1,10 +1,14 @@
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
+import { GenericSelectionComponent } from '../models/generic-selection';
 
 @Injectable({
   providedIn: 'root',
 })
 export class JobsService {
+  itemsPerPage: number = 0;
+  startIndex: number = 0;
+
   get data() {
     return [
       {
@@ -445,7 +449,7 @@ export class JobsService {
       },
     ];
   }
-  constructor() {}
+  constructor(private genericSelection: GenericSelectionComponent) {}
 
   getJobListings(params: any): any[] {
     console.log('params going to API:> ', params);
@@ -484,6 +488,23 @@ export class JobsService {
     if (params.sort && params.sort === 'new') {
       filteredListings = filteredListings.reverse();
     }
+
+    if ('itemsPerPage' in params) {
+      this.itemsPerPage = params['itemsPerPage'] ? parseInt(params['itemsPerPage'] as string, 10) : this.itemsPerPage;
+    }
+
+    if ('pageIndex' in params) {
+      const pageIndex = params['pageIndex'] ? parseInt(params['pageIndex'] as string, 10) : 0;
+      this.startIndex = pageIndex * this.itemsPerPage;
+    }
+
+    console.log("Final Params",params);
+    filteredListings = filteredListings.slice(this.startIndex, this.startIndex + this.itemsPerPage);
+    console.log("MY LISTINGS NOT WORKING",filteredListings);
+
+    // if (filteredListings.length === 0 && this.startIndex > 0) {
+    //   this.genericSelection.updateOption({ pageIndex: 0 });
+    // }
 
     return filteredListings;
   }

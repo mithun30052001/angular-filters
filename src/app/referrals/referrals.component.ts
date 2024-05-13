@@ -21,8 +21,4 @@ export class ReferralsComponent {
       this.referrals = this.jobsService.getJobListings(params);
     });
   }
-
-  updateReferrals(newListings: any[]): void {
-    this.filteredReferrals = newListings;
-  }
 }

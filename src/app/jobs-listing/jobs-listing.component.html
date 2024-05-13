@@ -1,7 +1,7 @@
-<filter-consumer-container [filteredListings]="jobs" (filteredListingsChange)="updateJobs($event)">
+<filter-consumer-container [filteredListings]="jobs">
 <div class="job-listings">
-  <ng-container *ngIf="filteredJobs.length > 0; else noJobs">
-    <mat-card *ngFor="let job of filteredJobs">
+  <ng-container *ngIf="jobs.length > 0; else noJobs">
+    <mat-card *ngFor="let job of jobs">
       <mat-card-header>
         <div class="card-header">
           <h3>{{ job.title }}</h3>

@@ -19,10 +19,7 @@ export class JobsListingComponent implements OnInit{
   ngOnInit() {
     this.genericSelection.allQueryParams$.subscribe((params) => {
       this.jobs = this.jobsService.getJobListings(params);
+      console.log("My jobs not working",this.jobs);
     });
-  }
-
-  updateJobs(newListings: any[]): void {
-    this.filteredJobs= newListings;
   }
 }
