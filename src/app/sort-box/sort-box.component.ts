@@ -15,9 +15,9 @@ export class SortBoxComponent {
     const sortParam = event?.target?.value;
     if (sortParam) {
       this.sort.emit(sortParam);
-      this.genericSelection.updateOption({ 'sortTerm': sortParam });
+      this.genericSelection.updateOption({'sort': sortParam });
     } else {
-      this.genericSelection.resetOption('sortTerm');
+      this.genericSelection.resetOption('sort');
     }
   }
 }
