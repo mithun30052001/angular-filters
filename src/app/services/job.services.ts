@@ -495,15 +495,11 @@ export class JobsService {
   }
 
   getPaginatedListings(params: QueryParams):  PaginatedListingsResult{
-    if (params['itemsPerPage']) {
-      this.itemsPerPage = params['itemsPerPage'] ? parseInt(params['itemsPerPage'] as string, 10) : this.itemsPerPage;
-    }
-
-    if(params['pageIndex']){
-      const pageIndex = params['pageIndex'] ? parseInt(params['pageIndex'] as string, 10) : 0;
-      this.startIndex = pageIndex * this.itemsPerPage;
-    }
-
+    this.itemsPerPage = params['itemsPerPage'] ? parseInt(params['itemsPerPage'] as string, 10) : 5;
+    const pageIndex = params['pageIndex'] ? parseInt(params['pageIndex'] as string, 10) : 0;
+    this.startIndex = pageIndex * this.itemsPerPage;
+    
+    console.log("startIndex",this.startIndex);
     const paginatedListings = this.getJobListings(params).slice(this.startIndex, this.startIndex + this.itemsPerPage);
     const itemsPerPage = this.itemsPerPage;
 
