@@ -1,10 +1,19 @@
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
+import { QueryParamsService } from '../models/query-params.service';
 
+interface PaginatedListingsResult {
+  paginatedListings: any[];
+  itemsPerPage: number;
+}
 @Injectable({
   providedIn: 'root',
 })
+
 export class JobsService {
+  itemsPerPage:number = 5;
+  startIndex:number = 0;
+  
   get data() {
     return [
       {
@@ -445,7 +454,7 @@ export class JobsService {
       },
     ];
   }
-  constructor() {}
+  constructor(private queryParams: QueryParamsService) {}
 
   getJobListings(params: any): any[] {
     console.log('params going to API:> ', params);
@@ -486,5 +495,28 @@ export class JobsService {
     }
 
     return filteredListings;
+  }
+
+  getPaginatedListings(params: any):  PaginatedListingsResult{
+    if (params.itemsPerPage) {
+      this.itemsPerPage = params['itemsPerPage'] ? parseInt(params['itemsPerPage'] as string, 10) : this.itemsPerPage;
+    }
+
+    if(params.pageIndex){
+      const pageIndex = params['pageIndex'] ? parseInt(params['pageIndex'] as string, 10) : 0;
+      this.startIndex = pageIndex * this.itemsPerPage;
+    }
+
+    const paginatedListings = this.getJobListings(params).slice(this.startIndex, this.startIndex + this.itemsPerPage);
+    const itemsPerPage = this.itemsPerPage;
+    
+    if (paginatedListings.length === 0 && this.startIndex > 0) {
+      this.queryParams.updateOption({ pageIndex: 0 });
+    }
+
+    return {
+      paginatedListings,
+      itemsPerPage
+    };
   }
 }

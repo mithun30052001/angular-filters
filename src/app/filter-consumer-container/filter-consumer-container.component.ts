@@ -12,25 +12,14 @@ export class FilterConsumerContainerComponent implements OnInit, OnDestroy {
   @Input() filteredListings: any[] = [];
   @Output() filteredListingsChange: EventEmitter<any[]> = new EventEmitter<any[]>();
   itemsPerPage: number = 5;
-  startIndex: number = 0;
   private queryParamsSubscription!: Subscription;
 
   constructor(private jobsService: JobsService, private queryParams: QueryParamsService) {}
 
   ngOnInit(): void {
     this.queryParamsSubscription = this.queryParams.allQueryParams$.subscribe((params) => {
-      console.log('Params Inside filter consumer', params);
-      if ('itemsPerPage' in params) {
-        this.itemsPerPage = params['itemsPerPage'] ? parseInt(params['itemsPerPage'] as string, 10) : this.itemsPerPage;
-      }
-      if ('pageIndex' in params) {
-        const pageIndex = params['pageIndex'] ? parseInt(params['pageIndex'] as string, 10) : 0;
-        this.startIndex = pageIndex * this.itemsPerPage;
-      }
-      const paginatedListings = this.jobsService.getJobListings(params).slice(this.startIndex, this.startIndex + this.itemsPerPage);
-      if (paginatedListings.length === 0 && this.startIndex > 0) {
-        this.queryParams.updateOption({ pageIndex: 0 });
-      }
+      const { paginatedListings, itemsPerPage } = this.jobsService.getPaginatedListings(params);
+      this.itemsPerPage = itemsPerPage;
       this.filteredListingsChange.emit(paginatedListings);
     });
   }
