@@ -1,6 +1,4 @@
-import { Component, Input, OnDestroy } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { Subscription } from 'rxjs';
+import { Component, Input } from '@angular/core';
 import { QueryParamsService } from '../models/query-params.service';
 
 @Component({
@@ -8,30 +6,18 @@ import { QueryParamsService } from '../models/query-params.service';
   templateUrl: './app-filters.component.html',
   styleUrls: ['./app-filters.component.scss']
 })
-export class AppFiltersComponent implements OnDestroy {
+export class AppFiltersComponent {
   @Input() choices:any = []
   @Input() paramKey:string = '';
   @Input() header:string = '';
   selectedChoice: string = '';
-  private queryParamsSubscription!: Subscription;
 
   constructor(
-    private router: Router,
-    private route: ActivatedRoute,
     private queryParams: QueryParamsService
   ) { }
 
   ngOnInit(): void {
     this.selectedChoice = this.queryParams.setSelectedOption(this.paramKey);
-    this.queryParamsSubscription = this.queryParams.allQueryParams$.subscribe(params => {
-      console.log("Inside app filters", params);
-    });
-  }
-
-  ngOnDestroy(): void {
-    if (this.queryParamsSubscription) {
-      this.queryParamsSubscription.unsubscribe();
-    }
   }
 
   updateFilter(event: any) {
@@ -39,9 +25,7 @@ export class AppFiltersComponent implements OnDestroy {
   }
 
   resetFilter() {
-    const queryParams = { ...this.route.snapshot.queryParams };
-    delete queryParams[this.paramKey];
-    this.router.navigate([], { queryParams: queryParams });
+    this.queryParams.resetOption(this.paramKey);
     this.selectedChoice = '';
   }
 }
