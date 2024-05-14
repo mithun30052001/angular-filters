@@ -6,6 +6,7 @@ import { Component, Input } from '@angular/core';
   styleUrls: ['./filter-consumer-container.component.scss']
 })
 export class FilterConsumerContainerComponent {
-  @Input() filteredListings: any[] = [];
+  @Input() totalItems!: number;
   @Input() itemsPerPage: number = 5;
+
 }

@@ -454,9 +454,7 @@ export class JobsService {
   constructor(private queryParams: QueryParamsService) {}
 
   getJobListings(params: QueryParams): any[] {
-    console.log('params going to API:> ', params);
     let filteredListings = [...this.data];
-
     if (params['location']) {
       filteredListings = filteredListings.filter(
         (job) => job.location.toLowerCase() === String(params['location']).toLowerCase()
@@ -498,8 +496,6 @@ export class JobsService {
     this.itemsPerPage = params['itemsPerPage'] ? parseInt(params['itemsPerPage'] as string, 10) : 5;
     const pageIndex = params['pageIndex'] ? parseInt(params['pageIndex'] as string, 10) : 0;
     this.startIndex = pageIndex * this.itemsPerPage;
-    
-    console.log("startIndex",this.startIndex);
     const paginatedListings = this.getJobListings(params).slice(this.startIndex, this.startIndex + this.itemsPerPage);
     const itemsPerPage = this.itemsPerPage;
 

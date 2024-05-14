@@ -17,7 +17,7 @@ export class AppFiltersComponent {
   ) { }
 
   ngOnInit(): void {
-    this.selectedChoice = this.queryParams.setSelectedOption(this.paramKey);
+    this.selectedChoice = this.queryParams.getQueryParam(this.paramKey);
   }
 
   updateFilter(event: any) {

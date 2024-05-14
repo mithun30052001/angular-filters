@@ -20,6 +20,10 @@ export class QueryParamsService {
   constructor(private router: Router, private route: ActivatedRoute) {
     this.route.queryParams.subscribe((params) => {
       this.allQueryParams$.next(params);
+      if(!params || Object.keys(params).length === 0) {
+        //Setting Default Query params
+        this.updateOption({itemsPerPage:10, pageIndex: 1})
+      }
     });
   }
 
@@ -29,7 +33,7 @@ export class QueryParamsService {
    * @returns The value of the selected option.
    */
 
-  setSelectedOption(paramKey: string): string {
+  getQueryParam(paramKey: string): string {
     let selectedOptionValue = '';
     this.route.queryParams.subscribe((params) => {
       selectedOptionValue = params[paramKey];
