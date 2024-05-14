@@ -10,7 +10,7 @@ import { QueryParamsService } from 'src/app/models/query-params.service';
 export class SearchBoxComponent implements OnInit,OnDestroy {
   @Output() search = new EventEmitter<string>();
   private queryParamsSubscription!: Subscription;
-  searchValue: any = '';
+  searchValue!: string | undefined;
 
   constructor(private queryParams: QueryParamsService) {}
 

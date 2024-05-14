@@ -11,9 +11,9 @@ import { Subscription } from 'rxjs';
 })
 export class PaginationComponent implements OnInit, OnDestroy {
   @Input() totalItems: number = 0;
-  itemsPerPage: any = 5;
+  itemsPerPage: number = 5;
   pageSizeOptions: number[] = [1, 5, 10, 25, 100];
-  currentPageIndex: any = 0;
+  currentPageIndex: number = 0;
   private queryParamsSubscription!: Subscription;
   constructor(private queryParams: QueryParamsService) {}
 

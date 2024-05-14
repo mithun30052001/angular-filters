@@ -8,7 +8,7 @@ import { QueryParamsService } from 'src/app/models/query-params.service';
   styleUrls: ['./sort-box.component.scss'],
 })
 export class SortBoxComponent implements OnInit, OnDestroy {
-  selectedSort: any = '';
+  selectedSort: string | undefined;;
   private queryParamsSubscription!: Subscription;
 
   constructor(private queryParams: QueryParamsService) {}
