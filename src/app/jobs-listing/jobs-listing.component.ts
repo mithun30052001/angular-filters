@@ -11,6 +11,11 @@ export class JobsListingComponent implements OnInit{
   jobs: any[] = [];
   filteredJobs: any[] = [];
 
+  /**
+   * @param jobsService - Service to fetch job listings.
+   * @param queryParams - Service to manage query parameters.
+  */
+
   constructor(
     private jobsService: JobsService,
     private queryParams: QueryParamsService
@@ -22,6 +27,10 @@ export class JobsListingComponent implements OnInit{
     });
   }
 
+  /**
+   * Method to update the filtered job listings.
+   * @param newListings - Array of new job listings to update the filteredJobs array.
+  */
   updateJobs(newListings: any[]): void {
     this.filteredJobs= newListings;
   }
