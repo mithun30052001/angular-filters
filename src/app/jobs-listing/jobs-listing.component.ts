@@ -10,6 +10,7 @@ import { QueryParamsService } from '../models/query-params.service';
 export class JobsListingComponent implements OnInit{
   jobs: any[] = [];
   filteredJobs: any[] = [];
+  itemsPerPage: number = 5;
 
   /**
    * @param jobsService - Service to fetch job listings.
@@ -24,14 +25,9 @@ export class JobsListingComponent implements OnInit{
   ngOnInit() {
     this.queryParams.allQueryParams$.subscribe((params) => {
       this.jobs = this.jobsService.getJobListings(params);
+      const { paginatedListings, itemsPerPage } = this.jobsService.getPaginatedListings(params);
+      this.filteredJobs = paginatedListings;
+      this.itemsPerPage = itemsPerPage;
     });
-  }
-
-  /**
-   * Method to update the filtered job listings.
-   * @param newListings - Array of new job listings to update the filteredJobs array.
-  */
-  updateJobs(newListings: any[]): void {
-    this.filteredJobs= newListings;
   }
 }

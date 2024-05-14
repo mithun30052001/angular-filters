@@ -10,6 +10,7 @@ import { JobsService } from 'src/app/services/job.services';
 export class ReferralsComponent {
   referrals: any[] = [];
   filteredReferrals: any[] = [];
+  itemsPerPage: number = 5;
 
   constructor(
     private queryParams: QueryParamsService,
@@ -19,10 +20,9 @@ export class ReferralsComponent {
   ngOnInit() {
     this.queryParams.allQueryParams$.subscribe((params) => {
       this.referrals = this.jobsService.getJobListings(params);
+      const { paginatedListings, itemsPerPage } = this.jobsService.getPaginatedListings(params);
+      this.filteredReferrals = paginatedListings;
+      this.itemsPerPage = itemsPerPage;
     });
-  }
-
-  updateReferrals(newListings: any[]): void {
-    this.filteredReferrals = newListings;
   }
 }
