@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { JobsService } from '../services/job.services';
 import { QueryParamsService } from '../models/query-params.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-jobs-listing',
@@ -11,7 +12,8 @@ export class JobsListingComponent implements OnInit{
   jobs: any[] = [];
   filteredJobs: any[] = [];
   itemsPerPage: number = 5;
-
+  private queryParamsSubscription!: Subscription;
+  
   /**
    * @param jobsService - Service to fetch job listings.
    * @param queryParams - Service to manage query parameters.
@@ -23,11 +25,25 @@ export class JobsListingComponent implements OnInit{
   ) {}
 
   ngOnInit() {
-    this.queryParams.allQueryParams$.subscribe((params) => {
-      this.jobs = this.jobsService.getJobListings(params);
-      const { paginatedListings, itemsPerPage } = this.jobsService.getPaginatedListings(params);
-      this.filteredJobs = paginatedListings;
-      this.itemsPerPage = itemsPerPage;
+    this.queryParamsSubscription = this.queryParams.allQueryParams$.subscribe((params) => {
+       this.jobs = this.jobsService.getJobListings(params);
+       const { paginatedListings, itemsPerPage } = this.jobsService.getPaginatedListings(params);
+       this.filteredJobs = paginatedListings;
+       this.itemsPerPage = itemsPerPage;
     });
+  }
+  
+  ngOnDestroy(): void {
+    if (this.queryParamsSubscription) {
+      this.queryParamsSubscription.unsubscribe();
+    }
+  }
+  
+  /**
+   * Method to update the filtered job listings.
+   * @param newListings - Array of new job listings to update the filteredJobs array.
+  */
+  updateJobs(newListings: any[]): void {
+    this.filteredJobs= newListings;
   }
 }
