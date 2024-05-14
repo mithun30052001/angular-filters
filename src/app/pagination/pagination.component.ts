@@ -1,7 +1,7 @@
 
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { JobsService } from '../services/job.services';
-import { GenericSelectionComponent } from '../models/generic-selection';
+import { QueryParamsService } from '../models/query-params.service';
 
 @Component({
   selector: 'pagination',
@@ -15,12 +15,12 @@ export class PaginationComponent {
   pageSizeOptions: number[] = [1, 5, 10, 25, 100];
   currentPageIndex: number = 0;
 
-  constructor(private jobsService: JobsService, private genericSelection: GenericSelectionComponent) {}
+  constructor(private jobsService: JobsService, private queryParams: QueryParamsService) {}
 
   onPageChange(event: any) {
     this.currentPageIndex = event.pageIndex;
     this.itemsPerPage = event.pageSize;
-    this.genericSelection.updateOption({ pageIndex: this.currentPageIndex, itemsPerPage: this.itemsPerPage });
+    this.queryParams.updateOption({ pageIndex: this.currentPageIndex, itemsPerPage: this.itemsPerPage });
   }
 
 }

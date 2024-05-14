@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { GenericSelectionComponent } from 'src/app/models/generic-selection';
+import { QueryParamsService } from 'src/app/models/query-params.service';
 import { JobsService } from 'src/app/services/job.services';
 
 @Component({
@@ -12,12 +12,12 @@ export class ReferralsComponent {
   filteredReferrals: any[] = [];
 
   constructor(
-    private genericSelection: GenericSelectionComponent,
+    private queryParams: QueryParamsService,
     private jobsService: JobsService
   ) {}
 
   ngOnInit() {
-    this.genericSelection.allQueryParams$.subscribe((params) => {
+    this.queryParams.allQueryParams$.subscribe((params) => {
       this.referrals = this.jobsService.getJobListings(params);
     });
   }

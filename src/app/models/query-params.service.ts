@@ -5,7 +5,7 @@ import { BehaviorSubject } from 'rxjs';
 @Injectable({
   providedIn: 'root',
 })
-export class GenericSelectionComponent {
+export class QueryParamsService {
   options: any[] = [];
   selectedOption: string = '';
   allQueryParams$: BehaviorSubject<object> = new BehaviorSubject<object>({});

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { JobsService } from '../services/job.services';
-import { GenericSelectionComponent } from '../models/generic-selection';
+import { QueryParamsService } from '../models/query-params.service';
 
 @Component({
   selector: 'app-jobs-listing',
@@ -13,11 +13,11 @@ export class JobsListingComponent implements OnInit{
 
   constructor(
     private jobsService: JobsService,
-    private genericSelection: GenericSelectionComponent
+    private queryParams: QueryParamsService
   ) {}
 
   ngOnInit() {
-    this.genericSelection.allQueryParams$.subscribe((params) => {
+    this.queryParams.allQueryParams$.subscribe((params) => {
       this.jobs = this.jobsService.getJobListings(params);
     });
   }
