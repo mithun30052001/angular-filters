@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
-import { GenericSelectionComponent } from 'src/app/models/generic-selection';
+import { Subscription } from 'rxjs';
+import { QueryParamsService } from 'src/app/models/query-params.service';
 import { JobsService } from 'src/app/services/job.services';
 
 @Component({
@@ -10,19 +11,26 @@ import { JobsService } from 'src/app/services/job.services';
 export class ReferralsComponent {
   referrals: any[] = [];
   filteredReferrals: any[] = [];
-
+  itemsPerPage: number = 5;
+  private queryParamsSubscription!: Subscription;
+  
   constructor(
-    private genericSelection: GenericSelectionComponent,
+    private queryParams: QueryParamsService,
     private jobsService: JobsService
   ) {}
 
   ngOnInit() {
-    this.genericSelection.allQueryParams$.subscribe((params) => {
-      this.referrals = this.jobsService.getJobListings(params);
+    this.queryParamsSubscription = this.queryParams.allQueryParams$.subscribe((params) => {
+        this.referrals = this.jobsService.getJobListings(params);
+      const { paginatedListings, itemsPerPage } = this.jobsService.getPaginatedListings(params);
+      this.filteredReferrals = paginatedListings;
+      this.itemsPerPage = itemsPerPage;
     });
   }
-
-  updateReferrals(newListings: any[]): void {
-    this.filteredReferrals = newListings;
+  
+  ngOnDestroy(): void {
+    if (this.queryParamsSubscription) {
+      this.queryParamsSubscription.unsubscribe();
+    }
   }
 }

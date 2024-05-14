@@ -1,11 +1,10 @@
 <div class="header"><search-box /></div>
-<sort-box (sort)="sortListings($event)"></sort-box>
+<sort-box></sort-box>
 <div class="container">
   <ng-content></ng-content>
 </div>
 <div class="footer">
   <pagination
-    [totalItems]="filteredListings.length"
-    [itemsPerPage]="itemsPerPage"
+    [totalItems]="totalItems"
   ></pagination>
 </div>

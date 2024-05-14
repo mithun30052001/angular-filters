@@ -1,6 +1,6 @@
 import { Component, Output, EventEmitter, OnInit, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { GenericSelectionComponent } from 'src/app/models/generic-selection';
+import { QueryParamsService } from 'src/app/models/query-params.service';
 
 @Component({
   selector: 'sort-box',
@@ -8,14 +8,13 @@ import { GenericSelectionComponent } from 'src/app/models/generic-selection';
   styleUrls: ['./sort-box.component.scss'],
 })
 export class SortBoxComponent implements OnInit, OnDestroy {
-  @Output() sort = new EventEmitter<string>();
-  selectedSort: any = '';
+  selectedSort: string | undefined;;
   private queryParamsSubscription!: Subscription;
 
-  constructor(private genericSelection: GenericSelectionComponent) {}
+  constructor(private queryParams: QueryParamsService) {}
 
   ngOnInit(): void {
-    this.queryParamsSubscription = this.genericSelection.allQueryParams$.subscribe((params) => {
+    this.queryParamsSubscription = this.queryParams.allQueryParams$.subscribe((params) => {
       if ('sort' in params) {
         this.selectedSort = params['sort']
       } else{
@@ -36,7 +35,6 @@ export class SortBoxComponent implements OnInit, OnDestroy {
     } else {
       this.selectedSort = sortType;
     }
-    this.sort.emit(this.selectedSort);
-    this.genericSelection.updateOption({ 'sort': this.selectedSort });
+    this.queryParams.updateOption({ 'sort': this.selectedSort });
   }
 }

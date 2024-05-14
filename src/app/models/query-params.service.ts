@@ -1,14 +1,15 @@
 import { Injectable } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { BehaviorSubject } from 'rxjs';
+import { QueryParams } from '../interfaces/queryParams.interface';
 
 @Injectable({
   providedIn: 'root',
 })
-export class GenericSelectionComponent {
+export class QueryParamsService {
   options: any[] = [];
   selectedOption: string = '';
-  allQueryParams$: BehaviorSubject<object> = new BehaviorSubject<object>({});
+  allQueryParams$: BehaviorSubject<QueryParams> = new BehaviorSubject<QueryParams>({});
 
   /**
    * Constructor to initialize the class with Router and ActivatedRoute dependencies.
@@ -19,6 +20,10 @@ export class GenericSelectionComponent {
   constructor(private router: Router, private route: ActivatedRoute) {
     this.route.queryParams.subscribe((params) => {
       this.allQueryParams$.next(params);
+      if(!params || Object.keys(params).length === 0) {
+        //Setting Default Query params
+        this.updateOption({itemsPerPage:10, pageIndex: 0})
+      }
     });
   }
 
@@ -28,7 +33,7 @@ export class GenericSelectionComponent {
    * @returns The value of the selected option.
    */
 
-  setSelectedOption(paramKey: string): string {
+  getQueryParam(paramKey: string): string {
     let selectedOptionValue = '';
     this.route.queryParams.subscribe((params) => {
       selectedOptionValue = params[paramKey];
@@ -44,7 +49,7 @@ export class GenericSelectionComponent {
    * @param searchParamValue The value of the search parameter (optional).
    */
 
-  updateOption(option: { [key: string]: any }) {
+  updateOption(option: QueryParams) {
     const queryParams = { ...this.route.snapshot.queryParams, ...option };
     this.router.navigate([], {
       queryParams: queryParams,
@@ -52,7 +57,7 @@ export class GenericSelectionComponent {
       queryParamsHandling: 'merge',
     });
   }
-  
+
   /**
    * Reset a particular query paramter
    * @param paramKey The key of the query parameter to be deleted..

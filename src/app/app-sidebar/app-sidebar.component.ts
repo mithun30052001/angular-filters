@@ -1,18 +1,21 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-sidebar',
   templateUrl: './app-sidebar.component.html',
   styleUrls: ['./app-sidebar.component.scss'],
 })
-export class AppSidebarComponent {
+export class AppSidebarComponent implements OnInit,OnDestroy{
   isJobsRoute: boolean = false;
+  isReferrals: boolean = false;
   locations: any = [];
   timings: any = [];
-  isReferrals: boolean = false;
-  constructor(private router: Router) {}
+  private routerEventsSubscription!: Subscription;
 
+  constructor(private router: Router) {}
+  
   ngOnInit() {
     this.locations = [
       { id: 'chennai', value: 'Chennai' },
@@ -31,9 +34,15 @@ export class AppSidebarComponent {
       { id: 'day', value: 'Day shift' },
       { id: 'notGiven', value: 'Not given' },
     ];
-    this.router.events.subscribe(() => {
+    this.routerEventsSubscription =this.router.events.subscribe(() => {
       this.isJobsRoute = this.router.url.includes('/jobs');
       this.isReferrals = this.router.url.includes('/referrals');
     });
+  }
+
+  ngOnDestroy(): void {
+    if (this.routerEventsSubscription) {
+      this.routerEventsSubscription.unsubscribe();
+    }
   }
 }
