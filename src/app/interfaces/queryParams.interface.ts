@@ -1,3 +1,8 @@
 export interface QueryParams {
-  [key: string]: string | number
+  location?: string;
+  timings?: string;
+  searchTerm?: string;
+  sort?: string;
+  itemsPerPage?: number;
+  pageIndex?: number;
 }
