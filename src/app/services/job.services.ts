@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
+import { QueryParams } from '../interfaces/queryParams.interface';
 import { QueryParamsService } from '../models/query-params.service';
 
 interface PaginatedListingsResult {
@@ -13,7 +13,7 @@ interface PaginatedListingsResult {
 export class JobsService {
   itemsPerPage:number = 5;
   startIndex:number = 0;
-  
+
   get data() {
     return [
       {
@@ -456,31 +456,31 @@ export class JobsService {
   }
   constructor(private queryParams: QueryParamsService) {}
 
-  getJobListings(params: any): any[] {
+  getJobListings(params: QueryParams): any[] {
     console.log('params going to API:> ', params);
     let filteredListings = [...this.data];
 
-    if (params.location) {
+    if (params['location']) {
       filteredListings = filteredListings.filter(
-        (job) => job.location.toLowerCase() === params.location.toLowerCase()
+        (job) => job.location.toLowerCase() === String(params['location']).toLowerCase()
       );
     }
 
-    if (params.timings) {
-      if (params.timings === 'Not given') {
+    if (params['timings']) {
+      if (params['timings'] === 'Not given') {
         filteredListings = filteredListings.filter(
           (job) => !job.timePreference
         );
       } else {
         filteredListings = filteredListings.filter(
           (job) =>
-            job.timePreference?.toLowerCase() === params.timings.toLowerCase()
+            job.timePreference?.toLowerCase() === String(params['timings']).toLowerCase()
         );
       }
     }
 
-    if (params.searchTerm) {
-      const searchTerm = params.searchTerm.toString().toLowerCase();
+    if (params['searchTerm']) {
+      const searchTerm = params['searchTerm'].toString().toLowerCase();
       filteredListings = filteredListings.filter(
         (job) =>
           job.title.toLowerCase().includes(searchTerm) ||
@@ -490,7 +490,7 @@ export class JobsService {
       );
     }
 
-    if (params.sort && params.sort === 'new') {
+    if (params['sort'] && params['sort'] === 'new') {
       filteredListings = filteredListings.reverse();
     }
 
@@ -509,7 +509,7 @@ export class JobsService {
 
     const paginatedListings = this.getJobListings(params).slice(this.startIndex, this.startIndex + this.itemsPerPage);
     const itemsPerPage = this.itemsPerPage;
-    
+
     if (paginatedListings.length === 0 && this.startIndex > 0) {
       this.queryParams.updateOption({ pageIndex: 0 });
     }

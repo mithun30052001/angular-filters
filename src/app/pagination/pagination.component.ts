@@ -2,6 +2,7 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { JobsService } from '../services/job.services';
 import { QueryParamsService } from '../models/query-params.service';
+import { PageEvent } from '@angular/material/paginator';
 
 @Component({
   selector: 'pagination',
@@ -17,7 +18,7 @@ export class PaginationComponent {
 
   constructor(private jobsService: JobsService, private queryParams: QueryParamsService) {}
 
-  onPageChange(event: any) {
+  onPageChange(event: PageEvent) {
     this.currentPageIndex = event.pageIndex;
     this.itemsPerPage = event.pageSize;
     this.queryParams.updateOption({ pageIndex: this.currentPageIndex, itemsPerPage: this.itemsPerPage });
