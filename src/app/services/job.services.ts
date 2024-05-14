@@ -493,7 +493,6 @@ export class JobsService {
   }
 
   getPaginatedListings(params: QueryParams):  PaginatedListingsResult{
-    console.log("Items per page",typeof(params['itemsPerPage']));
     this.itemsPerPage = params['itemsPerPage'] ? parseInt(String(params['itemsPerPage']), 10) : 5;
     const pageIndex = params['pageIndex'] ? parseInt(String(params['pageIndex']), 10) : 0;
     this.startIndex = pageIndex * this.itemsPerPage;
