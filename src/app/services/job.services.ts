@@ -1,11 +1,8 @@
 import { Injectable } from '@angular/core';
 import { QueryParams } from '../interfaces/queryParams.interface';
 import { QueryParamsService } from '../models/query-params.service';
+import { PaginatedListingsResult } from '../interfaces/paginatedListings.interface';
 
-interface PaginatedListingsResult {
-  paginatedListings: any[];
-  itemsPerPage: number;
-}
 @Injectable({
   providedIn: 'root',
 })
@@ -497,12 +494,12 @@ export class JobsService {
     return filteredListings;
   }
 
-  getPaginatedListings(params: any):  PaginatedListingsResult{
-    if (params.itemsPerPage) {
+  getPaginatedListings(params: QueryParams):  PaginatedListingsResult{
+    if (params['itemsPerPage']) {
       this.itemsPerPage = params['itemsPerPage'] ? parseInt(params['itemsPerPage'] as string, 10) : this.itemsPerPage;
     }
 
-    if(params.pageIndex){
+    if(params['pageIndex']){
       const pageIndex = params['pageIndex'] ? parseInt(params['pageIndex'] as string, 10) : 0;
       this.startIndex = pageIndex * this.itemsPerPage;
     }
