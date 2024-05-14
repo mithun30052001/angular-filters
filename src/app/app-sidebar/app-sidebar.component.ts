@@ -8,9 +8,10 @@ import { Router } from '@angular/router';
 })
 export class AppSidebarComponent {
   isJobsRoute: boolean = false;
+  isReferrals: boolean = false;
   locations: any = [];
   timings: any = [];
-  isReferrals: boolean = false;
+  
   constructor(private router: Router) {}
 
   ngOnInit() {
