@@ -8,7 +8,6 @@ import { QueryParamsService } from 'src/app/models/query-params.service';
   styleUrls: ['./sort-box.component.scss'],
 })
 export class SortBoxComponent implements OnInit, OnDestroy {
-  @Output() sort = new EventEmitter<string>();
   selectedSort: any = '';
   private queryParamsSubscription!: Subscription;
 
@@ -36,7 +35,6 @@ export class SortBoxComponent implements OnInit, OnDestroy {
     } else {
       this.selectedSort = sortType;
     }
-    this.sort.emit(this.selectedSort);
     this.queryParams.updateOption({ 'sort': this.selectedSort });
   }
 }

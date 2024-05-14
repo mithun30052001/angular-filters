@@ -30,14 +30,5 @@ export class FilterConsumerContainerComponent implements OnInit, OnDestroy {
     }
   }
 
-  sortListings(sortOption: string) {
-    if (sortOption === 'old') {
-      this.filteredListings.sort((a, b) => a.date - b.date);
-      console.log("1");
-    } else if (sortOption === 'new') {
-      console.log("2");
-
-      this.filteredListings.sort((a, b) => b.date - a.date);
-    }
-  }
+  
 }
