@@ -22,7 +22,7 @@ export class QueryParamsService {
       this.allQueryParams$.next(params);
       if(!params || Object.keys(params).length === 0) {
         //Setting Default Query params
-        this.updateOption({itemsPerPage:10, pageIndex: 1})
+        this.updateOption({itemsPerPage:10, pageIndex: 0})
       }
     });
   }
