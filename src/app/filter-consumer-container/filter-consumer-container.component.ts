@@ -7,6 +7,4 @@ import { Component, Input } from '@angular/core';
 })
 export class FilterConsumerContainerComponent {
   @Input() totalItems!: number;
-  @Input() itemsPerPage: number = 5;
-
 }
