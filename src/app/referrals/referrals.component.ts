@@ -22,7 +22,7 @@ export class ReferralsComponent {
 
   ngOnInit() {
     this.queryParamsSubscription = this.queryParams.allQueryParams$.subscribe((params) => {
-        this.referrals = this.jobsService.getJobListings(params);
+      this.referrals = this.jobsService.getJobListings(params);
       const { paginatedListings, itemsPerPage } = this.jobsService.getPaginatedListings(params);
       this.filteredReferrals = paginatedListings;
       this.itemsPerPage = itemsPerPage;
