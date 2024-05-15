@@ -7,8 +7,6 @@ import { QueryParams } from '../interfaces/queryParams.interface';
   providedIn: 'root',
 })
 export class QueryParamsService {
-  options: any[] = [];
-  selectedOption: string = '';
   allQueryParams$: BehaviorSubject<QueryParams> = new BehaviorSubject<QueryParams>({});
 
   /**
