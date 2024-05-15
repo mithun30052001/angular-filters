@@ -1,5 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { QueryParamsService } from '../models/query-params.service';
+import { Option } from '../interfaces/options.interface';
 
 @Component({
   selector: 'app-filters',
@@ -7,7 +8,7 @@ import { QueryParamsService } from '../models/query-params.service';
   styleUrls: ['./app-filters.component.scss']
 })
 export class AppFiltersComponent {
-  @Input() choices:any = []
+  @Input() choices:Option[] = []
   @Input() paramKey:string = '';
   @Input() header:string = '';
   selectedChoice: string = '';

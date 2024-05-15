@@ -1,6 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
+import { Option } from '../interfaces/options.interface';
 
 @Component({
   selector: 'app-sidebar',
@@ -10,8 +11,8 @@ import { Subscription } from 'rxjs';
 export class AppSidebarComponent implements OnInit,OnDestroy{
   isJobsRoute: boolean = false;
   isReferrals: boolean = false;
-  locations: any = [];
-  timings: any = [];
+  locations: Option[] = [];
+  timings: Option[] = [];
   private routerEventsSubscription!: Subscription;
 
   constructor(private router: Router) {}

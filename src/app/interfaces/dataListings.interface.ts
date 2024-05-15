@@ -6,5 +6,5 @@ export interface DataListing {
     experience: string;
     date: string;
     timePreference?: string;
-  }
+}
   
