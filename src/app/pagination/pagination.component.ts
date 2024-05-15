@@ -17,12 +17,6 @@ export class PaginationComponent implements OnInit, OnDestroy {
   private queryParamsSubscription!: Subscription;
   constructor(private queryParams: QueryParamsService) {}
 
-  onPageChange(event: PageEvent) {
-    this.currentPageIndex = event.pageIndex;
-    this.pageSize = event.pageSize;
-    this.queryParams.updateOption({ pageIndex: this.currentPageIndex, pageSize: this.pageSize });
-  }
-
   ngOnInit(): void {
     this.queryParamsSubscription = this.queryParams.allQueryParams$.subscribe((params) => {
       if(params['pageSize'] ){
@@ -33,7 +27,13 @@ export class PaginationComponent implements OnInit, OnDestroy {
       }
     });
   }
-
+  
+  onPageChange(event: PageEvent) {
+    this.currentPageIndex = event.pageIndex;
+    this.pageSize = event.pageSize;
+    this.queryParams.updateOption({ pageIndex: this.currentPageIndex, pageSize: this.pageSize });
+  }
+  
   ngOnDestroy(): void {
     if (this.queryParamsSubscription) {
       this.queryParamsSubscription.unsubscribe();
