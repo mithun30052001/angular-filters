@@ -11,7 +11,7 @@ import { JobsService } from 'src/app/services/job.services';
 export class ReferralsComponent {
   referrals: any[] = [];
   filteredReferrals: any[] = [];
-  itemsPerPage: number = 5;
+  itemsPerPage!: number;
   private queryParamsSubscription!: Subscription;
   
   constructor(

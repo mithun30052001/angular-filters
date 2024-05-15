@@ -8,7 +8,7 @@ import { PaginatedListingsResult } from '../interfaces/paginatedListings.interfa
 })
 
 export class JobsService {
-  itemsPerPage:number = 5;
+  itemsPerPage!:number;
   startIndex:number = 0;
 
   get data() {

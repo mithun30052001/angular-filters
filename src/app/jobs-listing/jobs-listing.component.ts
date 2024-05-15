@@ -11,7 +11,7 @@ import { Subscription } from 'rxjs';
 export class JobsListingComponent implements OnInit{
   jobs: any[] = [];
   filteredJobs: any[] = [];
-  itemsPerPage: number = 5;
+  itemsPerPage!: number;
   private queryParamsSubscription!: Subscription;
   
   /**
