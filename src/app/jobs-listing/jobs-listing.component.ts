@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { JobsService } from '../services/job.services';
 import { QueryParamsService } from '../models/query-params.service';
 import { Subscription } from 'rxjs';
+import { DataListing } from '../interfaces/dataListings.interface';
 
 @Component({
   selector: 'app-jobs-listing',
@@ -9,8 +10,8 @@ import { Subscription } from 'rxjs';
   styleUrls: ['./jobs-listing.component.scss'],
 })
 export class JobsListingComponent implements OnInit{
-  jobs: any[] = [];
-  filteredJobs: any[] = [];
+  jobs: DataListing[] = [];
+  filteredJobs: DataListing[] = [];
   itemsPerPage!: number;
   private queryParamsSubscription!: Subscription;
   
@@ -37,13 +38,5 @@ export class JobsListingComponent implements OnInit{
     if (this.queryParamsSubscription) {
       this.queryParamsSubscription.unsubscribe();
     }
-  }
-  
-  /**
-   * Method to update the filtered job listings.
-   * @param newListings - Array of new job listings to update the filteredJobs array.
-  */
-  updateJobs(newListings: any[]): void {
-    this.filteredJobs= newListings;
   }
 }

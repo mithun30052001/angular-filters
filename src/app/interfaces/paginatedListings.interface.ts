@@ -1,4 +1,6 @@
+import { DataListing } from "./dataListings.interface";
+
 export interface PaginatedListingsResult {
-  paginatedListings: any[];
+  paginatedListings: DataListing[];
   itemsPerPage: number;
 }

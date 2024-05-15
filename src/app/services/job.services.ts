@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { QueryParams } from '../interfaces/queryParams.interface';
 import { QueryParamsService } from '../models/query-params.service';
 import { PaginatedListingsResult } from '../interfaces/paginatedListings.interface';
+import { DataListing } from '../interfaces/dataListings.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -453,7 +454,7 @@ export class JobsService {
   }
   constructor(private queryParams: QueryParamsService) {}
 
-  getJobListings(params: QueryParams): any[] {
+  getJobListings(params: QueryParams): DataListing[] {
     let filteredListings = [...this.data];
     if (params['location']) {
       filteredListings = filteredListings.filter(

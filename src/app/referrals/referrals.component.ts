@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { QueryParamsService } from 'src/app/models/query-params.service';
 import { JobsService } from 'src/app/services/job.services';
+import { DataListing } from '../interfaces/dataListings.interface';
 
 @Component({
   selector: 'app-referrals',
@@ -9,8 +10,8 @@ import { JobsService } from 'src/app/services/job.services';
   styleUrls: ['./referrals.component.scss'],
 })
 export class ReferralsComponent {
-  referrals: any[] = [];
-  filteredReferrals: any[] = [];
+  referrals: DataListing[] = [];
+  filteredReferrals: DataListing[] = [];
   itemsPerPage!: number;
   private queryParamsSubscription!: Subscription;
   
