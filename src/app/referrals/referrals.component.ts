@@ -13,7 +13,12 @@ export class ReferralsComponent {
   filteredReferrals: any[] = [];
   itemsPerPage: number = 5;
   private queryParamsSubscription!: Subscription;
-  
+
+  /**
+   * @param jobsService - Service to fetch job listings.
+   * @param queryParams - Service to manage query parameters.
+  */
+
   constructor(
     private queryParams: QueryParamsService,
     private jobsService: JobsService
@@ -27,7 +32,7 @@ export class ReferralsComponent {
       this.itemsPerPage = itemsPerPage;
     });
   }
-  
+
   ngOnDestroy(): void {
     if (this.queryParamsSubscription) {
       this.queryParamsSubscription.unsubscribe();
