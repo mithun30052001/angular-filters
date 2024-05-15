@@ -15,6 +15,11 @@ export class ReferralsComponent {
   itemsPerPage!: number;
   private queryParamsSubscription!: Subscription;
   
+  /**
+   * @param jobsService - Service to fetch referral listings.
+   * @param queryParams - Service to manage query parameters.
+  */
+
   constructor(
     private queryParams: QueryParamsService,
     private jobsService: JobsService
