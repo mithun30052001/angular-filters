@@ -43,8 +43,6 @@ export class QueryParamsService {
    * Update query parameters based on selected option and search parameters.
    * @param optionKey The key of the query parameter to be updated.
    * @param optionValue The selected option.
-   * @param searchParamKey The key of the search parameter (optional).
-   * @param searchParamValue The value of the search parameter (optional).
    */
 
   updateOption(option: QueryParams) {
