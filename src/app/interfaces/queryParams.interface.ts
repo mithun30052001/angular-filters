@@ -3,6 +3,6 @@ export interface QueryParams {
   timings?: string;
   searchTerm?: string;
   sort?: string;
-  itemsPerPage?: number;
+  pageSize?: number;
   pageIndex?: number;
 }

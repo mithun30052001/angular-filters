@@ -12,7 +12,7 @@ import { DataListing } from '../interfaces/dataListings.interface';
 export class ReferralsComponent {
   referrals: DataListing[] = [];
   filteredReferrals: DataListing[] = [];
-  itemsPerPage!: number;
+  pageSize!: number;
   private queryParamsSubscription!: Subscription;
   
   /**
@@ -28,9 +28,9 @@ export class ReferralsComponent {
   ngOnInit() {
     this.queryParamsSubscription = this.queryParams.allQueryParams$.subscribe((params) => {
       this.referrals = this.jobsService.getJobListings(params);
-      const { paginatedListings, itemsPerPage } = this.jobsService.getPaginatedListings(params);
+      const { paginatedListings, pageSize } = this.jobsService.getPaginatedListings(params);
       this.filteredReferrals = paginatedListings;
-      this.itemsPerPage = itemsPerPage;
+      this.pageSize = pageSize;
     });
   }
   

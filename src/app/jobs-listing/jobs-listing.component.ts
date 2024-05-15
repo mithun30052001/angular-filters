@@ -12,7 +12,7 @@ import { DataListing } from '../interfaces/dataListings.interface';
 export class JobsListingComponent implements OnInit{
   jobs: DataListing[] = [];
   filteredJobs: DataListing[] = [];
-  itemsPerPage!: number;
+  pageSize!: number;
   private queryParamsSubscription!: Subscription;
   
   /**
@@ -28,9 +28,9 @@ export class JobsListingComponent implements OnInit{
   ngOnInit() {
     this.queryParamsSubscription = this.queryParams.allQueryParams$.subscribe((params) => {
        this.jobs = this.jobsService.getJobListings(params);
-       const { paginatedListings, itemsPerPage } = this.jobsService.getPaginatedListings(params);
+       const { paginatedListings, pageSize } = this.jobsService.getPaginatedListings(params);
        this.filteredJobs = paginatedListings;
-       this.itemsPerPage = itemsPerPage;
+       this.pageSize = pageSize;
     });
   }
   

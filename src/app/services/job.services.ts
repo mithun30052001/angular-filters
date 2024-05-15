@@ -9,7 +9,7 @@ import { DataListing } from '../interfaces/dataListings.interface';
 })
 
 export class JobsService {
-  itemsPerPage!:number;
+  pageSize!:number;
   startIndex:number = 0;
   
   /**
@@ -507,11 +507,11 @@ export class JobsService {
    * @returns The datalistings and the count of data for the current page 
    */
   getPaginatedListings(params: QueryParams):  PaginatedListingsResult{
-    this.itemsPerPage = params['itemsPerPage'] ? parseInt(String(params['itemsPerPage']), 10) : 5;
+    this.pageSize = params['pageSize'] ? parseInt(String(params['pageSize']), 10) : 5;
     const pageIndex = params['pageIndex'] ? parseInt(String(params['pageIndex']), 10) : 0;
-    this.startIndex = pageIndex * this.itemsPerPage;
-    const paginatedListings = this.getJobListings(params).slice(this.startIndex, this.startIndex + this.itemsPerPage);
-    const itemsPerPage = this.itemsPerPage;
+    this.startIndex = pageIndex * this.pageSize;
+    const paginatedListings = this.getJobListings(params).slice(this.startIndex, this.startIndex + this.pageSize);
+    const pageSize = this.pageSize;
 
     if (paginatedListings.length === 0 && this.startIndex > 0) {
       this.queryParams.updateOption({ pageIndex: 0 });
@@ -519,7 +519,7 @@ export class JobsService {
 
     return {
       paginatedListings,
-      itemsPerPage
+      pageSize
     };
   }
 }

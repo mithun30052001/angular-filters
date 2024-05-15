@@ -11,7 +11,7 @@ import { Subscription } from 'rxjs';
 })
 export class PaginationComponent implements OnInit, OnDestroy {
   @Input() totalItems: number = 0;
-  itemsPerPage!: number;
+  pageSize!: number;
   pageSizeOptions: number[] = [1, 5, 10, 25, 100];
   currentPageIndex: number = 0;
   private queryParamsSubscription!: Subscription;
@@ -19,14 +19,14 @@ export class PaginationComponent implements OnInit, OnDestroy {
 
   onPageChange(event: PageEvent) {
     this.currentPageIndex = event.pageIndex;
-    this.itemsPerPage = event.pageSize;
-    this.queryParams.updateOption({ pageIndex: this.currentPageIndex, itemsPerPage: this.itemsPerPage });
+    this.pageSize = event.pageSize;
+    this.queryParams.updateOption({ pageIndex: this.currentPageIndex, pageSize: this.pageSize });
   }
 
   ngOnInit(): void {
     this.queryParamsSubscription = this.queryParams.allQueryParams$.subscribe((params) => {
-      if(params['itemsPerPage'] ){
-        this.itemsPerPage = params['itemsPerPage'];
+      if(params['pageSize'] ){
+        this.pageSize = params['pageSize'];
       }
       if(params['pageIndex'] ){
         this.currentPageIndex = params['pageIndex'];
