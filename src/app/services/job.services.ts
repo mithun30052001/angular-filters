@@ -11,7 +11,10 @@ import { DataListing } from '../interfaces/dataListings.interface';
 export class JobsService {
   itemsPerPage!:number;
   startIndex:number = 0;
-
+  
+  /**
+   * Returns the data to be filtered,searched,sorted and paginated
+   */
   get data() {
     return [
       {
@@ -453,7 +456,12 @@ export class JobsService {
     ];
   }
   constructor(private queryParams: QueryParamsService) {}
-
+  
+  /**
+   * Get the total datalistings filtered based on current params 
+   * @params All the current parameters in router url as key-value pair.
+   * @returns An array of objects containing filtered data.
+   */
   getJobListings(params: QueryParams): DataListing[] {
     let filteredListings = [...this.data];
     if (params['location']) {
@@ -492,7 +500,12 @@ export class JobsService {
 
     return filteredListings;
   }
-
+  
+  /**
+   * Get the sliced datalistings to be displayed on current page based on params 
+   * @params All the current parameters in router url as key-value pair.
+   * @returns The datalistings and the count of data for the current page 
+   */
   getPaginatedListings(params: QueryParams):  PaginatedListingsResult{
     this.itemsPerPage = params['itemsPerPage'] ? parseInt(String(params['itemsPerPage']), 10) : 5;
     const pageIndex = params['pageIndex'] ? parseInt(String(params['pageIndex']), 10) : 0;
